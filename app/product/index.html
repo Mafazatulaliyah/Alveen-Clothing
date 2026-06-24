@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produk | Alveen Clothing</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../../css/globals.css">
+  <script>(function(){const t=localStorage.getItem('acTheme')||'light';document.documentElement.setAttribute('data-theme',t);})()</script>
+
+  <style>
+    .audio-control-btn-fixed {
+      position: fixed;
+      bottom: 160px; /* Di atas tombol back to top agar tidak bertumpukan */
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 9999;
+      transition: all 0.3s ease;
+    }
+    .audio-control-btn-fixed:hover {
+      transform: scale(1.1);
+    }
+    
+    /* Style untuk Modal Zoom Foto */
+    .image-zoom-backdrop {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .image-zoom-backdrop.open {
+      display: flex;
+      opacity: 1;
+    }
+    .image-zoom-content {
+      max-width: 90%;
+      max-height: 85vh;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+    .image-zoom-backdrop.open .image-zoom-content {
+      transform: scale(1);
+    }
+  </style>
+</head>
+<body>
+
+<audio id="bgMusic" src="../audio/click.mp3" loop></audio>
+
+<button id="audio-toggle-btn" class="audio-control-btn-fixed fixed bottom-40 right-5 w-11 h-11 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center shadow-lg z-[9999] transition-all duration-300 hover:scale-110 border border-white/20" title="Hentikan/Putar Musik">
+  <i id="audio-icon" class="fas fa-volume-up text-base"></i>
+</button>
+
+<div id="loading-screen"><div class="ls-logo">PRODUK</div><div class="ls-bar-wrap"><div class="ls-bar"></div></div></div>
+
+<nav id="navbar">
+  <div class="nav-wrap">
+    <a href="app/product/index.html" class="nav-logo">
+      <div class="nav-logo-box">AC</div>
+      <span class="nav-logo-text">ALVEEN CLOTHING</span>
+    </a>
+    <div class="nav-links">
+    <a href="../../index.html" class="nav-link">Home</a>
+    
+    <a href="index.html" class="nav-link active">Produk</a>
+    
+    <a href="../katalog/index.html" class="nav-link">Katalog</a>
+    
+    <a href="../order/index.html" class="nav-link">Order</a>
+    
+    <a href="../kontak/index.html" class="nav-link">Kontak</a>
+</div>
+    <div class="nav-actions">
+      <button class="btn-theme" id="themeBtn">🌙</button>
+      <a href="app/order/index.html" class="btn-nav-cta" onclick="if(window.ClickSound) ClickSound.play()"><i class="fas fa-shopping-bag"></i> Pesan Sekarang</a>
+    </div>
+    <button class="hamburger" id="ham"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-nav-overlay" id="mob-overlay" onclick="closeMobileNav()"></div>
+<div class="mobile-nav" id="mob-nav">
+    <a href="../../index.html" class="mobile-nav-link">Home</a>
+    <a href="index.html" class="mobile-nav-link active">Produk</a>
+    <a href="../katalog/index.html" class="mobile-nav-link">Katalog</a>
+    <a href="../order/index.html" class="mobile-nav-link">Order</a>
+    <a href="../kontak/index.html" class="mobile-nav-link">Kontak</a>
+</div>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="hero-badge" style="display:inline-flex;margin-bottom:16px;animation:fadeDown .8s .2s both;">
+      <span class="hero-badge-dot"></span> Koleksi Premium
+    </div>
+    <h1 class="page-hero-title">Semua <span>Produk</span></h1>
+    <p class="page-hero-sub">Temukan koleksi lengkap baju olahraga, jersey, jaket outdoor, dan berbagai kebutuhan konveksi premium</p>
+  </div>
+</div>
+
+<section class="products-section section">
+  <div class="container">
+    <div class="product-toolbar">
+      <div class="search-wrap">
+        <span class="search-ico"><i class="fas fa-search"></i></span>
+        <input type="text" id="prod-search" placeholder="Cari produk..." oninput="filterProducts()">
+      </div>
+      <select class="sort-select" id="prod-sort" onchange="filterProducts()">
+        <option value="default">Urutkan: Default</option>
+        <option value="name">Nama A-Z</option>
+        <option value="price-asc">Harga: Terendah</option>
+        <option value="price-desc">Harga: Tertinggi</option>
+      </select>
+    </div>
+
+    <div class="filter-row" id="filter-row"></div>
+
+    <div class="products-grid" id="prod-grid"></div>
+
+    <div id="prod-empty" style="display:none;text-align:center;padding:64px 0;">
+      <div style="font-size:4rem;margin-bottom:16px;">🔍</div>
+      <h3 style="font-family:var(--font-heading);font-size:1.5rem;color:var(--text-primary);margin-bottom:8px;">Produk Tidak Ditemukan</h3>
+      <p style="color:var(--text-muted);">Coba kata kunci lain atau ganti filter kategori</p>
+      <button class="btn btn-ghost" style="margin-top:20px;" onclick="resetFilter()">Reset Filter</button>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section section-sm" style="text-align:center;">
+  <div class="container">
+    <div style="position:relative;z-index:1;max-width:600px;margin:0 auto;" class="reveal">
+      <h2 class="cta-title" style="font-size:clamp(1.8rem,4vw,3rem);">TIDAK MENEMUKAN YANG DICARI?</h2>
+      <p class="cta-desc" style="font-size:.95rem;">Konsultasikan kebutuhan custom Anda dengan tim kami. Kami siap memproduksi sesuai keinginan!</p>
+      <a href="app/order/index.html" class="btn btn-white" onclick="if(window.ClickSound) ClickSound.play()"><i class="fas fa-comments"></i> Konsultasi Sekarang</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div><div class="footer-logo"><div class="footer-logo-box">AC</div><span class="footer-logo-text">ALVEEN CLOTHING</span></div><p class="footer-tagline">Solusi terbaik untuk kebutuhan konveksi premium Anda.</p><div class="footer-socials"><a href="https://www.instagram.com/alveenclothing_konveksi?igsh=MWtraWZoaW1mYTU4MA==" class="footer-soc"><i class="fab fa-instagram"></i></a><a href="#" class="footer-soc"><i class="fab fa-facebook"></i></a><a href="https://wa.me/6281234567890" class="footer-soc"><i class="fab fa-whatsapp"></i></a></div></div>
+      <div><h4>Menu</h4><div class="footer-links"><a href="index.html" class="footer-link">Beranda</a><a href="index.html" class="footer-link">Produk</a><a href="../order/index.html" class="footer-link">Order</a><a href="../kontak/index.html" class="footer-link">Kontak</a></div></div>
+      <div><h4>Kategori</h4><div class="footer-links"><a href="#" class="footer-link" onclick="setFilter('jersey')">Jersey</a><a href="#" class="footer-link" onclick="setFilter('jaket')">Jaket Outdoor</a><a href="#" class="footer-link" onclick="setFilter('seragam')">Seragam</a><a href="#" class="footer-link" onclick="setFilter('hoodie')">Hoodie</a></div></div>
+      <div><h4>Kontak</h4><div class="footer-contact-row"><span class="fci">📱</span><span>0896-8121-6684</span></div><div class="footer-contact-row"><span class="fci">✉️</span><span>alveen.clothing@email.com</span></div></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2024 <span>Alveen Clothing</span>. All rights reserved.</div></div>
+  </div>
+</footer>
+
+<a href="https://wa.me/089681216684" id="wa-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-chevron-up"></i></button>
+
+<div class="modal-backdrop" id="qv-modal"><div class="modal-box" id="qv-box"></div></div>
+
+<div class="image-zoom-backdrop" id="image-zoom-modal" onclick="closeImageZoom()">
+  <button class="absolute top-5 right-5 text-white text-3xl font-bold cursor-pointer hover:text-gray-300 z-[100001]" onclick="closeImageZoom()">✕</button>
+  <img src="" id="zoomed-image" class="image-zoom-content" alt="Zoomed View" onclick="event.stopPropagation()">
+</div>
+
+<script src="../../components/shared.js"></script>
+<script>
+let activeFilter='all';
+
+(function(){
+  // AMBIL ELEMEN KONTROL AUDIO
+  const bgMusic = document.getElementById('bgMusic');
+  const audioBtn = document.getElementById('audio-toggle-btn');
+  const audioIcon = document.getElementById('audio-icon');
+
+  if(bgMusic) { bgMusic.volume = 0.40; }
+
+  // LOGIKA PLAY/PAUSE TOMBOL AUDIO
+  if(audioBtn && bgMusic && audioIcon) {
+    audioBtn.addEventListener('click', () => {
+      if(window.ClickSound) { ClickSound.play(); }
+
+      if (bgMusic.paused) {
+        bgMusic.play()
+          .then(() => {
+            audioIcon.className = "fas fa-volume-up text-base";
+            if(window.Toast) Toast.show('Musik Aktif', 'Musik latar kembali diputar', 'success');
+          })
+          .catch(err => console.log("Audio play error:", err));
+      } else {
+        bgMusic.pause();
+        audioIcon.className = "fas fa-volume-mute text-base";
+        if(window.Toast) Toast.show('Musik Berhenti', 'Musik latar telah dihentikan', 'info');
+      }
+    });
+  }
+
+  // MODIFIKASI AUTOPLAY BACKSOUND VIA LOADING SCREEN
+  setTimeout(()=>{ 
+    const ls=document.getElementById('loading-screen'); 
+    if(ls){
+      ls.classList.add('out');
+      setTimeout(()=>ls.remove(),700);
+    }
+    
+    // Memicu musik menyala otomatis setelah loading screen selesai
+    if(bgMusic) {
+      bgMusic.play()
+        .then(() => {
+          if(audioIcon) audioIcon.className = "fas fa-volume-up text-base";
+        })
+        .catch(error => {
+          console.log("Autoplay diblokir browser.");
+          if(audioIcon) audioIcon.className = "fas fa-volume-mute text-base";
+        });
+    }
+  }, 1800);
+
+  // Cadangan: Jika browser memblokir, musik langsung berputar begitu user mengeklik area mana pun
+  document.addEventListener('click', () => {
+    if (bgMusic && bgMusic.paused) {
+      bgMusic.play()
+        .then(() => {
+          if(audioIcon) audioIcon.className = "fas fa-volume-up text-base";
+        })
+        .catch(err => console.log("Audio play error:", err));
+    }
+  }, { once: true });
+
+  // OTOMATISASI EFEK SUARA KLIK UNTUK SEMUA TOMBOL SECARA AMAN
+  document.addEventListener('click', (e) => {
+    if (window.ClickSound && e.target.closest('button, .btn, .nav-link, .footer-link, .filter-chip, .product-card')) {
+      window.ClickSound.currentTime = 0;
+      window.ClickSound.play().catch(err => console.log(err));
+    }
+  });
+
+  function applyTheme(t){ document.documentElement.setAttribute('data-theme',t); localStorage.setItem('acTheme',t); document.querySelectorAll('.btn-theme').forEach(b=>b.textContent=t==='dark'?'☀️':'🌙'); }
+  applyTheme(localStorage.getItem('acTheme')||'light');
+  document.querySelectorAll('#themeBtn,#themeBtn2').forEach(b=>b.addEventListener('click',()=>{ const c=document.documentElement.getAttribute('data-theme'); applyTheme(c==='dark'?'light':'dark'); if(window.Toast) Toast.show('Tema','Berhasil diganti!','info'); }));
+
+  const nav=document.getElementById('navbar');
+  window.addEventListener('scroll',()=>{ if(nav) { nav.classList.toggle('scrolled',window.scrollY>50); } const btt=document.getElementById('btt'); if(btt){ btt.classList.toggle('show',window.scrollY>300); } });
+
+  const ham=document.getElementById('ham');
+  const mobNav=document.getElementById('mob-nav');
+  const mobOv=document.getElementById('mob-overlay');
+  window.closeMobileNav=function(){ if(ham) ham.classList.remove('open'); if(mobNav) mobNav.classList.remove('open'); if(mobOv) mobOv.classList.remove('open'); }
+  if(ham){
+    ham.addEventListener('click',()=>ham.classList.contains('open')?closeMobileNav():(ham.classList.add('open'),mobNav.classList.add('open'),mobOv.classList.add('open')));
+  }
+  if(mobNav){
+    mobNav.querySelectorAll('.mobile-nav-link').forEach(l=>l.addEventListener('click',closeMobileNav));
+  }
+
+  const ro=new IntersectionObserver(entries=>entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);} }),{threshold:.12});
+  document.querySelectorAll('.reveal,.reveal-l,.reveal-r,.reveal-s').forEach(el=>ro.observe(el));
+
+  // Build filter chips
+  const fr=document.getElementById('filter-row');
+  if(window.CATEGORIES && fr) {
+    fr.innerHTML = '';
+    CATEGORIES.forEach(c=>{
+      const btn=document.createElement('button');
+      btn.className='filter-chip'+(c.key==='all'?' active':'');
+      btn.textContent=c.icon+' '+c.label;
+      btn.dataset.filter=c.key;
+      btn.onclick=()=>{ document.querySelectorAll('.filter-chip').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); activeFilter=c.key; filterProducts(); };
+      fr.appendChild(btn);
+    });
+  }
+
+  if(window.PRODUCTS) {
+    renderProducts(PRODUCTS);
+  }
+
+  // Modal Backdrop Close
+  const modal=document.getElementById('qv-modal');
+  if(modal){
+    modal.addEventListener('click',e=>{ if(e.target===modal) closeQV(); });
+  }
+  document.addEventListener('keydown',e=>{ 
+    if(e.key==='Escape') {
+      closeQV();
+      closeImageZoom();
+    } 
+  });
+
+})();
+
+function closeQV(){ const qvm = document.getElementById('qv-modal'); if(qvm) qvm.classList.remove('open'); }
+window.closeQV=closeQV;
+
+// FUNGSI UNTUK MEMBUKA ZOOM FOTO FULL SCREEN
+window.openImageZoom = function(src) {
+  if(window.ClickSound) window.ClickSound.play();
+  const zoomModal = document.getElementById('image-zoom-modal');
+  const zoomedImg = document.getElementById('zoomed-image');
+  if(zoomModal && zoomedImg) {
+    zoomedImg.src = src;
+    zoomModal.classList.add('open');
+  }
+};
+
+// FUNGSI UNTUK MENUTUP ZOOM FOTO
+window.closeImageZoom = function() {
+  const zoomModal = document.getElementById('image-zoom-modal');
+  if(zoomModal) zoomModal.classList.remove('open');
+};
+
+window.openQuickView=function(id){
+  if(!window.PRODUCTS) return;
+  const p=PRODUCTS.find(x=>x.id == id);
+  if(!p) return;
+  const bm={TERLARIS:'badge-hot',NEW:'badge-new',SALE:'badge-sale',PREMIUM:'badge-pop',POPULER:'badge-pop'};
+  const qvBox = document.getElementById('qv-box');
+  if(!qvBox) return;
+  
+  // Menambahkan cursor-zoom-in dan fungsi onclick="openImageZoom('${p.image}')" pada foto detail produk
+  qvBox.innerHTML=`
+    <div class="modal-header">
+      <h2 class="modal-title">${p.name}</h2>
+      <button class="modal-close-btn" onclick="closeQV()">✕</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+      <div style="aspect-ratio:1;background:var(--bg-secondary);border-radius:var(--radius-lg);overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid var(--border); cursor: zoom-in;" onclick="openImageZoom('${p.image}')" title="Klik untuk memperbesar gambar">
+        <img src="${p.image}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover; transition: transform 0.3s;" class="hover:scale-105" onerror="this.onerror=null; this.parentElement.innerHTML='<div style=\'font-size:3rem;\'>👕</div>';">
+      </div>
+      <div>
+        ${p.badge?`<span class="product-badge ${bm[p.badge]||'badge-pop'}" style="position:static;display:inline-block;margin-bottom:12px;">${p.badge}</span>`:''}
+        <div class="product-cat" style="margin-bottom:8px;">${p.category}</div>
+        <p style="color:var(--text-secondary);font-size:.93rem;line-height:1.75;margin-bottom:16px;">${p.desc}</p>
+        <div style="margin-bottom:20px;">
+          <span class="product-price" style="font-size:1.8rem;">${typeof formatRupiah === 'function' ? formatRupiah(p.price) : 'Rp ' + p.price}</span>
+          ${p.oldPrice?`<span class="product-old-price">${typeof formatRupiah === 'function' ? formatRupiah(p.oldPrice) : 'Rp ' + p.oldPrice}</span>`:''}
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="../order/index.html" class="btn btn-primary"><i class="fas fa-shopping-bag"></i> Pesan Sekarang</a>
+          <button class="btn btn-ghost" onclick="closeQV()"><i class="fas fa-times"></i> Tutup</button>
+        </div>
+      </div>
+    </div>`;
+  const qvModal = document.getElementById('qv-modal');
+  if(qvModal) qvModal.classList.add('open');
+};
+
+window.directToOrder = function(e, name, price) {
+  if(e && e.stopPropagation) e.stopPropagation();
+  localStorage.setItem('ac_order_name', name);
+  localStorage.setItem('ac_order_price', price);
+  window.location.href = "../order/index.html";
+};
+
+function renderProducts(list){
+  const grid = document.getElementById('prod-grid');
+  const empty = document.getElementById('prod-empty');
+  if(!grid) return;
+  if(!list.length){ grid.innerHTML=''; if(empty) empty.style.display='block'; return; }
+  if(empty) empty.style.display='none';
+  const bm = {TERLARIS:'badge-hot',NEW:'badge-new',SALE:'badge-sale',PREMIUM:'badge-pop',POPULER:'badge-pop'};
+  const wl = JSON.parse(localStorage.getItem('acWishlist')||'[]');
+  
+  grid.innerHTML = list.map((p,i) => `
+    <div class="product-card reveal cursor-pointer" data-delay="${(i%4)+1}" onclick="openQuickView('${p.id}')">
+      <div class="product-img" style="position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; background:var(--bg-secondary);">
+        <img src="${p.image}" alt="${p.name}" style="width:100%; height:100%; object-fit:cover;" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22><text y=%2250%%22 x=%2250%%22 font-size=%2240%22 text-anchor=%22middle%22 dy=%22.3em%22>👕</text></svg>';">
+        ${p.badge?`<span class="product-badge ${bm[p.badge]||'badge-pop'}">${p.badge}</span>`:''}
+        <button class="wishlist-btn${wl.includes('p'+p.id)?' active':''}" onclick="toggleWishlist(event,this,'p${p.id}')">${wl.includes('p'+p.id)?'❤️':'🤍'}</button>
+        <div class="product-img-overlay">
+          <button class="btn btn-white btn-sm" onclick="openQuickView('${p.id}')">👁 Detail</button>
+          <button class="btn btn-primary btn-sm" onclick="directToOrder(event, '${p.name}', ${p.price})">🛒 Pesan</button>
+        </div>
+      </div>
+      <div class="product-body">
+        <div class="product-cat">${p.category}</div>
+        <h3 class="product-name">${p.name}</h3>
+        <div class="product-footer">
+          <span class="product-price">${typeof formatRupiah === 'function' ? formatRupiah(p.price) : 'Rp ' + p.price}</span>
+          <button class="btn btn-primary btn-sm" onclick="directToOrder(event, '${p.name}', ${p.price})"><i class="fas fa-shopping-cart"></i></button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+window.toggleWishlist = function(e, btn, id) {
+  if(e && e.stopPropagation) e.stopPropagation();
+  const wl = JSON.parse(localStorage.getItem('acWishlist')||'[]');
+  const idx = wl.indexOf(id);
+  if(idx > -1) { wl.splice(idx,1); btn.textContent='🤍'; } 
+  else { wl.push(id); btn.textContent='❤️'; }
+  localStorage.setItem('acWishlist', JSON.stringify(wl));
+};
+
+window.filterProducts=function(){
+  if(!window.PRODUCTS) return;
+  const q=document.getElementById('prod-search').value.toLowerCase().trim();
+  const sort=document.getElementById('prod-sort').value;
+  let list=[...PRODUCTS];
+  if(activeFilter!=='all') list=list.filter(p=>p.category===activeFilter);
+  if(q) list=list.filter(p=>p.name.toLowerCase().includes(q)||p.desc.toLowerCase().includes(q)||p.category.includes(q));
+  if(sort==='name') list.sort((a,b)=>a.name.localeCompare(b.name));
+  else if(sort==='price-asc') list.sort((a,b)=>a.price-b.price);
+  else if(sort==='price-desc') list.sort((a,b)=>b.price-a.price);
+  renderProducts(list);
+};
+
+window.resetFilter=function(){
+  activeFilter='all';
+  const ps = document.getElementById('prod-search');
+  const pst = document.getElementById('prod-sort');
+  if(ps) ps.value='';
+  if(pst) pst.value='default';
+  document.querySelectorAll('.filter-chip').forEach((b,i)=>b.classList.toggle('active',i===0));
+  if(window.PRODUCTS) renderProducts(PRODUCTS);
+};
+
+window.setFilter=function(cat){
+  document.querySelectorAll('.filter-chip').forEach(b=>b.classList.toggle('active',b.dataset.filter===cat));
+  activeFilter=cat; filterProducts();
+  const psSec = document.querySelector('.products-section');
+  if(psSec) psSec.scrollIntoView({behavior:'smooth'});
+};
+</script>
+</body>
+</html>
