@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order | Alveen Clothing</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../../css/globals.css">
+  <script>(function(){const t=localStorage.getItem('acTheme')||'light';document.documentElement.setAttribute('data-theme',t);})()</script>
+
+  <style>
+    .audio-control-btn-fixed {
+      position: fixed;
+      bottom: 160px; /* Di atas tombol back to top agar tidak bertumpukan */
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 9999;
+      transition: all 0.3s ease;
+    }
+    .audio-control-btn-fixed:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+
+<audio id="bgMusic" src="../audio/click.mp3" loop></audio>
+
+<button id="audio-toggle-btn" class="audio-control-btn-fixed fixed bottom-40 right-5 w-11 h-11 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center shadow-lg z-[9999] transition-all duration-300 hover:scale-110 border border-white/20" title="Hentikan/Putar Musik">
+  <i id="audio-icon" class="fas fa-volume-up text-base"></i>
+</button>
+
+<div id="loading-screen"><div class="ls-logo">ORDER</div><div class="ls-bar-wrap"><div class="ls-bar"></div></div></div>
+
+<nav id="navbar">
+  <div class="nav-wrap">
+    <a href="../../index.html" class="nav-logo">
+      <div class="nav-logo-box">AC</div>
+      <span class="nav-logo-text">ALVEEN CLOTHING</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="../../index.html" class="nav-link">Home</a>
+      <a href="../product/index.html" class="nav-link">Produk</a>
+      <a href="../katalog/index.html" class="nav-link">Katalog</a>
+      <a href="index.html" class="nav-link active">Order</a>
+      <a href="../kontak/index.html" class="nav-link">Kontak</a>
+    </div>
+    
+    <div class="nav-actions">
+      <button class="btn-theme" id="themeBtn">🌙</button>
+      <a href="index.html" class="btn-nav-cta" onclick="ClickSound.play()"><i class="fas fa-shopping-bag"></i> Pesan Sekarang</a>
+    </div>
+    <button class="hamburger" id="ham"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-nav-overlay" id="mob-overlay" onclick="closeMobileNav()"></div>
+<div class="mobile-nav" id="mob-nav">
+  <a href="../../index.html" class="mobile-nav-link">Home</a>
+  <a href="../product/index.html" class="mobile-nav-link">Produk</a>
+  <a href="../katalog/index.html" class="mobile-nav-link">Katalog</a>
+  <a href="index.html" class="mobile-nav-link active">Order</a>
+  <a href="../kontak/index.html" class="mobile-nav-link">Kontak</a>
+</div>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="hero-badge" style="display:inline-flex;margin-bottom:16px;animation:fadeDown .8s .2s both;">
+      <span class="hero-badge-dot"></span> Form Pemesanan
+    </div>
+    <h1 class="page-hero-title">Form <span>Pemesanan</span></h1>
+    <p class="page-hero-sub">Isi detail pesanan kustom konveksi premium Anda di bawah ini secara lengkap</p>
+  </div>
+</div>
+
+<section class="order-section section">
+  <div class="container">
+    <div class="order-grid">
+      
+      <div class="order-aside reveal-l">
+        <h2 class="order-aside-title">ORDER</h2>
+        <p class="order-aside-desc">Silahkan isi formulir pemesanan berikut. Tim kami akan segera memvalidasi detail desain dan kuantitas produksi Anda via WhatsApp.</p>
+      </div>
+
+      <div class="order-form-wrap reveal-r">
+        <h2 class="form-title">Data Pemesanan</h2>
+        <form onsubmit="event.preventDefault(); Toast.show('Order', 'Form pesanan berhasil terkirim!', 'success');">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Nama Lengkap</label>
+              <input type="text" class="form-input" required placeholder="Nama Anda">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">No WhatsApp</label>
+              <input type="tel" class="form-input" required placeholder="Contoh: 0896xxxx">
+            </div>
+
+            <div class="form-group form-full">
+              <label class="form-label">Jenis Produk</label>
+              <select class="form-input" id="order-product-select">
+                <option value="">-- Pilih Produk --</option>
+                <option value="Jersey Futsal Pro Custom">Jersey Futsal Pro Custom</option>
+                <option value="Jersey Sepak Bola Elite">Jersey Sepak Bola Elite</option>
+                <option value="Jersey Basket Premium">Jersey Basket Premium</option>
+                
+                <option value="Jaket Gunung Windbreaker">Jaket Gunung Windbreaker</option>
+                <option value="Jaket Outdoor Hiking Pro">Jaket Outdoor Hiking Pro</option>
+                <option value="Jaket Varsity Custom">Jaket Varsity Custom</option>
+                <option value="Hoodie Fleece Premium">Hoodie Fleece Premium</option>
+                <option value="Hoodie Oversize Streetwear">Hoodie Oversize Streetwear</option>
+                
+                <option value="Polo Shirt Komunitas">Polo Shirt Komunitas</option>
+                <option value="Seragam Organisasi Custom">Seragam Organisasi Custom</option>
+                <option value="Kaos Olahraga Drifit">Kaos Olahraga Drifit</option>
+                <option value="Baju Seragam Event">Baju Seragam Event</option>
+                
+                <option value="Tas Outdoor Daypack 30L">Tas Outdoor Daypack 30L</option>
+                <option value="Tas Ransel Laptop Outdoor">Tas Ransel Laptop Outdoor</option>
+                <option value="Sepatu Hiking Trail">Sepatu Hiking Trail</option>
+                <option value="Kaos Kaki Hiking Anti-Slip">Kaos Kaki Hiking Anti-Slip</option>
+              </select>
+            </div>
+
+            <div class="form-group form-full">
+              <label class="form-label">Jumlah (Pcs)</label>
+              <input type="number" class="form-input" min="1" required placeholder="Minimal kuantitas order">
+            </div>
+
+            <div class="form-group form-full">
+              <label class="form-label">Catatan Tambahan (Ukuran / Bahan / Desain)</label>
+              <textarea class="form-input" rows="5" placeholder="Detail tambahan spesifikasi pesanan Anda..."></textarea>
+            </div>
+
+            <div class="form-group form-full">
+              <button type="submit" class="btn btn-primary" onclick="ClickSound.play()">Kirim Pesanan</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <div class="footer-logo-box">AC</div>
+          <span class="footer-logo-text">ALVEEN CLOTHING</span>
+        </div>
+        <p class="footer-tagline">Solusi terbaik untuk kebutuhan konveksi premium Anda.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/alveenclothing_konveksi?igsh=MWtraWZoaW1mYTU4MA==" class="footer-soc"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="footer-soc"><i class="fab fa-facebook"></i></a>
+          <a href="https://wa.me/089681216684" class="footer-soc"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4>Menu</h4>
+        <div class="footer-links">
+          <a href="../../index.html" class="footer-link">Beranda</a>
+          <a href="../product/index.html" class="footer-link">Produk</a>
+          <a href="index.html" class="footer-link">Order</a>
+          <a href="../kontak/index.html" class="footer-link">Kontak</a>
+        </div>
+      </div>
+      <div>
+        <h4>Kategori</h4>
+        <div class="footer-links">
+          <a href="../product/index.html" class="footer-link">Jersey</a>
+          <a href="../product/index.html" class="footer-link">Jaket Outdoor</a>
+          <a href="../product/index.html" class="footer-link">Seragam</a>
+          <a href="../product/index.html" class="footer-link">Hoodie</a>
+        </div>
+      </div>
+      <div>
+        <h4>Kontak</h4>
+        <div class="footer-contact-row"><span class="fci">📱</span><span>0896-8121-6684</span></div>
+        <div class="footer-contact-row"><span class="fci">✉️</span><span>alveen.clothing@email.com</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 <span>Alveen Clothing</span>. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/089681216684" id="wa-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-chevron-up"></i></button>
+
+<script src="../../components/shared.js"></script>
+<script src="../../shared.js"></script>
+
+<script>
+(function(){
+  // AMBIL ELEMEN KONTROL AUDIO
+  const bgMusic = document.getElementById('bgMusic');
+  const audioBtn = document.getElementById('audio-toggle-btn');
+  const audioIcon = document.getElementById('audio-icon');
+
+  if(bgMusic) { 
+    bgMusic.volume = 0.40; 
+    
+    // Ambil detik terakhir dari halaman sebelumnya di localStorage
+    const lastTime = localStorage.getItem('bgMusic_time');
+    if(lastTime) {
+      bgMusic.currentTime = parseFloat(lastTime);
+    }
+
+    // Simpan posisi durasi musik secara realtime setiap detik berubah
+    bgMusic.addEventListener('timeupdate', () => {
+      localStorage.setItem('bgMusic_time', bgMusic.currentTime);
+    });
+  }
+
+  // LOGIKA PLAY/PAUSE TOMBOL AUDIO
+  if(audioBtn && bgMusic && audioIcon) {
+    audioBtn.addEventListener('click', () => {
+      if(window.ClickSound) { ClickSound.play(); }
+
+      if (bgMusic.paused) {
+        bgMusic.play()
+          .then(() => {
+            audioIcon.className = "fas fa-volume-up text-base";
+            if(window.Toast) Toast.show('Musik Active', 'Musik latar kembali diputar', 'success');
+          })
+          .catch(err => console.log("Audio play error:", err));
+      } else {
+        bgMusic.pause();
+        audioIcon.className = "fas fa-volume-mute text-base";
+        if(window.Toast) Toast.show('Musik Berhenti', 'Musik latar telah dihentikan', 'info');
+      }
+    });
+  }
+
+  // Loading Screen & Audio Autoplay Handler
+  setTimeout(() => { 
+    const ls = document.getElementById('loading-screen'); 
+    if(ls){ ls.classList.add('out'); setTimeout(() => ls.remove(), 700); } 
+
+    // Mainkan secara otomatis jika browser mengizinkan setelah loading selesai
+    if(bgMusic) {
+      bgMusic.play()
+        .then(() => {
+          if(audioIcon) audioIcon.className = "fas fa-volume-up text-base";
+        })
+        .catch(error => {
+          console.log("Autoplay diblokir browser.");
+          if(audioIcon) audioIcon.className = "fas fa-volume-mute text-base";
+        });
+    }
+  }, 1200);
+
+  // Cadangan: Jika browser memblokir, musik langsung berputar begitu user mengeklik area mana pun
+  document.addEventListener('click', () => {
+    if (bgMusic && bgMusic.paused) {
+      bgMusic.play()
+        .then(() => {
+          if(audioIcon) audioIcon.className = "fas fa-volume-up text-base";
+        })
+        .catch(err => console.log("Audio play error:", err));
+    }
+  }, { once: true });
+
+  // OTOMATISASI EFEK SUARA KLIK UNTUK SEMUA TOMBOL SECARA AMAN
+  document.addEventListener('click', (e) => {
+    if (window.ClickSound && e.target.closest('button, .btn, .nav-link, .footer-link, .filter-chip')) {
+      window.ClickSound.currentTime = 0;
+      window.ClickSound.play().catch(err => console.log(err));
+    }
+  });
+
+  // Theme Matcher
+  function applyTheme(t){ 
+    document.documentElement.setAttribute('data-theme', t); 
+    localStorage.setItem('acTheme', t); 
+    document.querySelectorAll('.btn-theme').forEach(b => b.textContent = t === 'dark' ? '☀️' : '🌙'); 
+  }
+  applyTheme(localStorage.getItem('acTheme') || 'light');
+  
+  document.querySelectorAll('#themeBtn').forEach(b => b.addEventListener('click', () => { 
+    if(window.ClickSound) ClickSound.play(); 
+    const c = document.documentElement.getAttribute('data-theme'); 
+    applyTheme(c === 'dark' ? 'light' : 'dark'); 
+    if(window.Toast) Toast.show('Tema', 'Berhasil diganti!', 'info');
+  }));
+
+  // Scroll Navigation
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => { 
+    nav.classList.toggle('scrolled', window.scrollY > 50); 
+    document.getElementById('btt').classList.toggle('show', window.scrollY > 300); 
+  });
+
+  // Mobile Menu Layout
+  const ham = document.getElementById('ham');
+  const mobNav = document.getElementById('mob-nav');
+  const mobOv = document.getElementById('mob-overlay');
+  
+  window.closeMobileNav = function(){ 
+    ham.classList.remove('open'); mobNav.classList.remove('open'); mobOv.classList.remove('open'); 
+  }
+  ham.addEventListener('click', () => ham.classList.contains('open') ? closeMobileNav() : (ham.classList.add('open'), mobNav.classList.add('open'), mobOv.classList.add('open')));
+  mobNav.querySelectorAll('.mobile-nav-link').forEach(l => l.addEventListener('click', closeMobileNav));
+
+  // Capture Product Redirection data from LocalStorage
+  const savedProductName = localStorage.getItem('ac_order_name');
+  if(savedProductName) {
+    const selectElem = document.getElementById('order-product-select');
+    if (savedProductName.toLowerCase().includes('jersey')) selectElem.value = 'Jersey Futsal Pro Custom';
+    else if (savedProductName.toLowerCase().includes('jaket')) selectElem.value = 'Jaket Gunung Windbreaker';
+    else if (savedProductName.toLowerCase().includes('hoodie')) selectElem.value = 'Hoodie Fleece Premium';
+    else if (savedProductName.toLowerCase().includes('seragam')) selectElem.value = 'Seragam Organisasi Custom';
+    
+    localStorage.removeItem('ac_order_name');
+    localStorage.removeItem('ac_order_price');
+  }
+
+  // Scroll Animations Trigger
+  const ro = new IntersectionObserver(entries => entries.forEach(e => { 
+    if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target); } 
+  }), {threshold: .12});
+  document.querySelectorAll('.reveal, .reveal-l, .reveal-r, .reveal-s').forEach(el => ro.observe(el));
+})();
+</script>
+</body>
+</html>
