@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Alveen Clothing — Konveksi Premium Baju Olahraga, Jersey Futsal, Jaket Outdoor & Seragam Berkualitas Terbaik">
+  <meta property="og:title" content="Alveen Clothing | Premium Sportswear Konveksi">
+  <meta property="og:description" content="Solusi Terbaik Baju Olahraga & Outdoor Berkualitas">
+  <title>Alveen Clothing | Solusi Terbaik Baju Olahraga & Outdoor Berkualitas</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/globals.css">
+  
+  <script>(function(){const t=localStorage.getItem('acTheme')||'light';document.documentElement.setAttribute('data-theme',t);})()</script>
+
+  <style>
+    /* Diperbaiki agar serasi dengan pengaturan tombol di body */
+    .audio-control-btn-fixed {
+      position: fixed;
+      bottom: 160px; /* Jarak aman di atas tombol Scroll to Top (btt) */
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 9999;
+      transition: all 0.3s ease;
+    }
+    .audio-control-btn-fixed:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+
+<audio id="bg-music" loop>
+  <source src="public/audio/background-music.mp3" type="audio/mpeg">
+  Browser Anda tidak mendukung elemen audio.
+</audio>
+
+<button id="audio-toggle-btn" class="audio-control-btn-fixed fixed bottom-40 right-5 w-11 h-11 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center shadow-lg z-[9999] transition-all duration-300 hover:scale-110 border border-white/20" title="Hentikan/Putar Musik">
+  <i id="audio-icon" class="fas fa-volume-up text-base"></i>
+</button>
+
+<div id="loading-screen">
+  <div class="ls-logo">ALVEEN CLOTHING</div>
+  <div class="ls-sub">Premium Sportswear Konveksi</div>
+  <div class="ls-bar-wrap"><div class="ls-bar"></div></div>
+  <div class="ls-dots"><div class="ls-dot"></div><div class="ls-dot"></div><div class="ls-dot"></div></div>
+</div>
+
+<div id="promo-bar">
+  🎉 PROMO SPESIAL! Min. 50 pcs Gratis Desain &amp; Ongkir Area Jateng — 
+  <a href="app/order/index.html">Pesan Sekarang →</a>
+  <button onclick="document.getElementById('promo-bar').style.display='none'" style="background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;margin-left:16px;">✕</button>
+</div>
+
+<nav id="navbar">
+  <div class="nav-wrap">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-box">AC</div>
+      <span class="nav-logo-text">ALVEEN CLOTHING</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html"                class="nav-link active">Home</a>
+      <a href="app/product/index.html"    class="nav-link">Produk</a>
+      <a href="app/katalog/index.html"    class="nav-link">Katalog</a>
+      <a href="app/order/index.html"      class="nav-link">Order</a>
+      <a href="app/kontak/index.html"     class="nav-link">Kontak</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-theme" id="themeBtn" title="Toggle tema">🌙</button>
+      <a href="app/order/index.html" class="btn-nav-cta" onclick="ClickSound.play()">
+        <i class="fas fa-shopping-bag"></i> Pesan Sekarang
+      </a>
+    </div>
+    <button class="hamburger" id="ham"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-nav-overlay" id="mob-overlay" onclick="closeMobileNav()"></div>
+
+<div class="mobile-nav" id="mob-nav">
+  <a href="index.html"             class="mobile-nav-link active"><i class="fas fa-home" style="width:18px"></i> Home</a>
+  <a href="app/product/index.html" class="mobile-nav-link"><i class="fas fa-tshirt" style="width:18px"></i> Produk</a>
+  <a href="app/katalog/index.html" class="mobile-nav-link"><i class="fas fa-th-large" style="width:18px"></i> Katalog</a>
+  <a href="app/order/index.html"   class="mobile-nav-link"><i class="fas fa-shopping-cart" style="width:18px"></i> Order</a>
+  <a href="app/kontak/index.html"  class="mobile-nav-link"><i class="fas fa-phone" style="width:18px"></i> Kontak</a>
+  <div style="margin-top:16px;display:flex;gap:10px;align-items:center;">
+    <button class="btn-theme" id="themeBtn2" title="Toggle tema">🌙</button>
+    <a href="app/order/index.html" class="btn btn-primary btn-sm" style="flex:1;text-align:center;" onclick="ClickSound.play()">
+      <i class="fas fa-shopping-bag"></i> Pesan Sekarang
+    </a>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-canvas">
+    <div class="hero-orb orb-1"></div>
+    <div class="hero-orb orb-2"></div>
+    <div class="hero-orb orb-3"></div>
+    <div class="hero-grid"></div>
+  </div>
+
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Konveksi Premium Terpercaya Sejak 2016
+      </div>
+
+      <h1 class="hero-title">
+        ALVEEN<br>
+        <span class="hero-title-accent">CLOTHING</span>
+      </h1>
+
+      <p class="hero-sub">
+        Solusi Terbaik Baju Olahraga &amp; Outdoor Berkualitas. Jersey futsal, jaket gunung, hoodie custom, seragam komunitas — semua dengan kualitas premium, harga terbaik, produksi cepat.
+      </p>
+
+      <div class="hero-btns">
+        <a href="app/order/index.html" class="btn btn-primary btn-lg" onclick="ClickSound.play()">
+          <i class="fas fa-shopping-bag"></i> Pesan Sekarang
+        </a>
+        <a href="app/product/index.html" class="btn btn-outline btn-lg" onclick="ClickSound.play()">
+          <i class="fas fa-tshirt"></i> Lihat Produk
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num" data-counter="5000" data-suffix="+">0+</div>
+          <div class="hero-stat-label">Pelanggan</div>
+        </div>
+        <div>
+          <div class="hero-stat-num" data-counter="50000" data-suffix="+">0+</div>
+          <div class="hero-stat-label">Produk Terjual</div>
+        </div>
+        <div>
+          <div class="hero-stat-num" data-counter="8" data-suffix=" Thn">0</div>
+          <div class="hero-stat-label">Pengalaman</div>
+        </div>
+        <div>
+          <div class="hero-stat-num" data-counter="100" data-suffix="%">0</div>
+          <div class="hero-stat-label">Kepuasan</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-image-card">
+      <div class="hero-card" style="position:relative;">
+        <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(37,99,235,.15),rgba(30,64,175,.25));border-radius:inherit;"></div>
+       <div class="product-hero-display">
+    <img src="img/produk/profil.png" alt="Alveen Clothing Jersey Premium" class="hero-img-fluid">
+  </div>
+        <div class="hero-card-label">Alveen Clothing</div>
+        <div class="hero-float-1 glass">
+          <div class="hf-icon">⭐</div>
+          <div class="rating-text" style="margin-left: 12px; display: flex; flex-direction: column;"></div>
+          <div class="hf-label">Rating</div>
+          <div class="hf-val">4.9 / 5.0</div>
+        </div>
+        <div class="hero-float-2 glass">
+          <div class="hf-icon">📦</div>
+          <div class="hf-label">Pesanan Aktif</div>
+          <div class="hf-val">247 Order</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    SCROLL
+  </div>
+</section>
+
+<section class="about section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual-wrap reveal-l">
+        <div class="about-img">
+          <i class="fas fa-industry" style="font-size:6rem;color:rgba(255,255,255,.3);"></i>
+        </div>
+        <div class="about-float">
+          <div class="about-float-icon">🏆</div>
+          <div>
+            <div class="about-float-num">8+</div>
+            <div class="about-float-label">Tahun Berpengalaman</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-content reveal-r">
+        <div class="section-eyebrow">Tentang Kami</div>
+        <h2 class="about-title">Konveksi Premium <span>Sejak 2016</span></h2>
+        <p class="about-desc">
+          Alveen Clothing adalah konveksi premium yang berkomitmen menghadirkan produk pakaian olahraga dan outdoor berkualitas tinggi. Didirikan tahun 2016, kami telah melayani ribuan pelanggan dari berbagai komunitas, organisasi, dan perorangan di seluruh Indonesia.
+        </p>
+        <p class="about-desc">
+          Dengan teknologi mesin modern and tim desainer berpengalaman, kami mampu memproduksi pesanan custom dari 1 hingga ribuan pcs dengan kualitas konsisten dan waktu produksi tepat.
+        </p>
+        <div class="about-feats">
+          <div class="about-feat">
+            <div class="feat-ico">⚡</div>
+            <div><div class="feat-title">Produksi Cepat</div><div class="feat-sub">7–14 hari kerja</div></div>
+          </div>
+          <div class="about-feat">
+            <div class="feat-ico">🎨</div>
+            <div><div class="feat-title">Custom Desain</div><div class="feat-sub">Sesuai keinginan</div></div>
+          </div>
+          <div class="about-feat">
+            <div class="feat-ico">📦</div>
+            <div><div class="feat-title">Min. Order Rendah</div><div class="feat-sub">Mulai 1 pcs</div></div>
+          </div>
+          <div class="about-feat">
+            <div class="feat-ico">🛡️</div>
+            <div><div class="feat-title">Garansi Kualitas</div><div class="feat-sub">100% terjamin</div></div>
+          </div>
+        </div>
+        <a href="app/order/index.html" class="btn btn-primary" onclick="ClickSound.play()">
+          <i class="fas fa-arrow-right"></i> Hubungi Kami
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats section-sm">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card reveal" data-delay="1">
+        <div class="stat-num" data-counter="5000" data-suffix="+">0+</div>
+        <div class="stat-label">Pelanggan Puas</div>
+      </div>
+      <div class="stat-card reveal" data-delay="2">
+        <div class="stat-num" data-counter="50000" data-suffix="+">0+</div>
+        <div class="stat-label">Produk Terjual</div>
+      </div>
+      <div class="stat-card reveal" data-delay="3">
+        <div class="stat-num" data-counter="200" data-suffix="+">0+</div>
+        <div class="stat-label">Komunitas Dilayani</div>
+      </div>
+      <div class="stat-card reveal" data-delay="4">
+        <div class="stat-num stat-num-blue" data-counter="8" data-suffix=" Thn">0</div>
+        <div class="stat-label">Pengalaman</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="keunggulan section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow reveal">Keunggulan Kami</div>
+      <h2 class="section-title reveal">Mengapa Pilih <span>Alveen Clothing?</span></h2>
+      <p class="section-desc reveal">Kami memberikan layanan terbaik dengan standar kualitas premium yang tidak menguras kantong Anda</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card reveal" data-delay="1">
+        <div class="feat-card-icon">💎</div>
+        <h3 class="feat-card-title">Bahan Premium</h3>
+        <p class="feat-card-desc">Drifit, polyester, katun combed, dan fleece berkualitas tinggi — nyaman dipakai dan tahan lama untuk semua aktivitas.</p>
+      </div>
+      <div class="feat-card reveal" data-delay="2">
+        <div class="feat-card-icon">🧵</div>
+        <h3 class="feat-card-title">Jahitan Rapi</h3>
+        <p class="feat-card-desc">Setiap jahitan dikerjakan dengan presisi menggunakan mesin modern. Quality control ketat di setiap tahap produksi.</p>
+      </div>
+      <div class="feat-card reveal" data-delay="3">
+        <div class="feat-card-icon">⚡</div>
+        <h3 class="feat-card-title">Produksi Cepat</h3>
+        <p class="feat-card-desc">Selesai dalam 7–14 hari kerja. Layanan ekspres 3–5 hari tersedia untuk kebutuhan mendesak Anda.</p>
+      </div>
+      <div class="feat-card reveal" data-delay="1">
+        <div class="feat-card-icon">💰</div>
+        <h3 class="feat-card-title">Harga Kompetitif</h3>
+        <p class="feat-card-desc">Harga grosir mulai dari pcs pertama. Semakin banyak order semakin hemat. Transparan tanpa biaya tersembunyi.</p>
+      </div>
+      <div class="feat-card reveal" data-delay="2">
+        <div class="feat-card-icon">🎨</div>
+        <h3 class="feat-card-title">Custom Desain Bebas</h3>
+        <p class="feat-card-desc">Tim desainer siap mewujudkan desain impian Anda. Upload sendiri atau konsultasikan dengan kami, gratis revisi 2x.</p>
+      </div>
+      <div class="feat-card reveal" data-delay="3">
+        <div class="feat-card-icon">🎧</div>
+        <p class="feat-card-desc">Customer service siap membantu kapan saja via WhatsApp. Respon cepat, solusi tepat, komunikasi ramah dan profesional.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="products-section section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow reveal">Produk Unggulan</div>
+      <h2 class="section-title reveal">Koleksi <span>Terlaris</span></h2>
+      <p class="section-desc reveal">Produk-produk pilihan yang paling diminati pelanggan setia Alveen Clothing</p>
+    </div>
+    <div class="products-grid" id="featured-grid"></div>
+    <div style="text-align:center;margin-top:48px;" class="reveal">
+      <a href="app/product/index.html" class="btn btn-primary btn-lg" onclick="ClickSound.play()">
+        <i class="fas fa-th-large"></i> Lihat Semua Produk
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="video-section section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow reveal">Video Profil</div>
+      <h2 class="section-title reveal">Lihat <span>Proses Produksi</span> Kami</h2>
+      <p class="section-desc reveal">Transparansi penuh — dari desain hingga product jadi yang berkualitas premium</p>
+    </div>
+    
+    <div class="video-wrap reveal-s" style="position: relative; border-radius: 24px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.15); background: #000;">
+      <video width="100%" controls style="display: block; width: 100%; height: auto;">
+        <source src="public/video/promosi.mp4" type="video/mp4">
+        Browser Anda tidak mendukung tag video.
+      </video>
+    </div>
+  </div>
+</section>
+
+<section class="testi-section section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow reveal">Testimoni</div>
+      <h2 class="section-title reveal">Kata <span>Pelanggan Kami</span></h2>
+      <p class="section-desc reveal">Ribuan pelanggan puas berbicara tentang pengalaman mereka bersama Alveen Clothing</p>
+    </div>
+    <div class="testi-slider reveal">
+      <div class="testi-track" id="testi-track"></div>
+    </div>
+    <div class="slider-nav">
+      <button class="slider-btn" id="tprev"><i class="fas fa-chevron-left"></i></button>
+      <button class="slider-btn" id="tnext"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="slider-dots" id="testi-dots"></div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--bg-secondary);">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow reveal">FAQ</div>
+      <h2 class="section-title reveal">Pertanyaan yang <span>Sering Diajukan</span></h2>
+    </div>
+    <div style="max-width:760px;margin:0 auto;" class="reveal">
+      <div class="faq-item">
+        <div class="faq-q">Berapa minimum order di Alveen Clothing? <div class="faq-ico">+</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Sangat fleksibel! Mulai 1 pcs untuk produk ready stock. Untuk custom/sablon minimum 12 pcs per desain. Semakin banyak, semakin murah per pcs-nya.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Berapa lama waktu produksi pesanan custom? <div class="faq-ico">+</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Standar 7–14 hari kerja setelah desain disetujui and DP dibayarkan. Layanan ekspres 3–5 hari tersedia dengan biaya tambahan.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Apakah bisa request desain sendiri? <div class="faq-ico">+</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Tentu! Upload desain dalam format JPG, PNG, PDF, AI, atau CDR. Tim desainer kami juga siap membuat desain dari nol. Desain gratis untuk pesanan di atas 50 pcs.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Metode pembayaran apa saja yang tersedia? <div class="faq-ico">+</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Transfer Bank (BCA, Mandiri, BNI, BRI), QRIS, GoPay, OVO, Dana, dan COD untuk area Semarang. Sistem DP 50% di awal, pelunasan sebelum pengiriman.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Apakah tersedia pengiriman ke seluruh Indonesia? <div class="faq-ico">+</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Ya! Pengiriman via JNE, J&T, SiCepat, dan Anteraja ke seluruh Indonesia. Area Semarang tersedia layanan antar jemput.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Bagaimana jika produk tidak sesuai pesanan? <div class="faq-ico">+</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Kami berikan garansi penuh! Jika tidak sesuai kesepakatan awal, kami siap revisi atau penggantian produk tanpa biaya tambahan.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section section" style="text-align:center;">
+  <div class="container">
+    <div style="position:relative;z-index:1;max-width:680px;margin:0 auto;" class="reveal">
+      <h2 class="cta-title">SIAP PESAN SEKARANG?</h2>
+      <p class="cta-desc">Dapatkan konsultasi gratis dan penawaran terbaik untuk kebutuhan konveksi Anda. Tim kami siap mewujudkan produk impian Anda!</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+        <a href="app/order/index.html" class="btn btn-white btn-lg" onclick="ClickSound.play()">
+          <i class="fas fa-shopping-bag"></i> Pesan Sekarang
+        </a>
+        <a href="https://wa.me/0896-8121-6684=Halo%20Alveen%20Clothing!" class="btn btn-outline btn-lg" target="_blank" onclick="ClickSound.play()">
+          <i class="fab fa-whatsapp"></i> Chat WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <div class="footer-logo-box">AC</div>
+          <span class="footer-logo-text">ALVEEN CLOTHING</span>
+        </div>
+        <p class="footer-tagline">Solusi terbaik untuk kebutuhan konveksi premium Anda. Kualitas terjamin, harga bersahabat, pelayanan terbaik.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/alveenclothing_konveksi?igsh=MWtraWZoaW1mYTU4MA==" class="footer-soc" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="footer-soc" title="Facebook"><i class="fab fa-facebook"></i></a>
+          <a href="https://wa.me/62 896-8121-6684" class="footer-soc" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://www.tiktok.com/@alveenclothing?_r=1&_t=ZS-97RInRqAtYj" class="footer-soc" title="TikTok"><i class="fab fa-tiktok"></i></a>
+          <a href="www.youtube.com/@AlveenClothing" class="footer-soc" title="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4>Menu Utama</h4>
+        <div class="footer-links">
+          <a href="index.html" class="footer-link">Beranda</a>
+          <a href="app/product/index.html" class="footer-link">Produk</a>
+          <a href="app/katalog/index.html" class="footer-link">Katalog</a>
+          <a href="app/order/index.html" class="footer-link">Order</a>
+          <a href="app/kontak/index.html" class="footer-link">Kontak</a>
+        </div>
+      </div>
+      <div>
+        <h4>Kategori Produk</h4>
+        <div class="footer-links">
+          <a href="app/product/index.html" class="footer-link">Jersey Futsal &amp; Bola</a>
+          <a href="app/product/index.html" class="footer-link">Jaket Outdoor</a>
+          <a href="app/product/index.html" class="footer-link">Hoodie &amp; Sweater</a>
+          <a href="app/product/index.html" class="footer-link">Seragam Komunitas</a>
+          <a href="app/product/index.html" class="footer-link">Tas &amp; Sepatu Outdoor</a>
+          <a href="app/product/index.html" class="footer-link">Kaos Olahraga</a>
+        </div>
+      </div>
+      <div>
+        <h4>Hubungi Kami</h4>
+        <div class="footer-contact-row"><span class="fci">📍</span><span>Jl. Pesona Asri, Blk. A1 No.5, Kramas, Kec. Tembalang, Kota Semarang, Jawa Tengah 50278</span></div>
+        <div class="footer-contact-row"><span class="fci">📱</span><span>0896-8121-6684</span></div>
+        <div class="footer-contact-row"><span class="fci">✉️</span><span>IG : @alveenclothing_konveksi</span></div>
+        <div class="footer-contact-row"><span class="fci">🕐</span><span>Senin–Sabtu, 08.00-21.00 WIB</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2024 <span>Alveen Clothing</span>. All rights reserved. Dibuat dengan ❤️ di Semarang</div>
+      <div class="footer-btmns">
+        <a href="#" class="footer-btmn">Kebijakan Privasi</a>
+        <a href="#" class="footer-btmn">Syarat &amp; Ketentuan</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/0896-8121-6684=Halo%20Alveen%20Clothing!" id="wa-float" target="_blank" title="Chat WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'});if(window.ClickSound){ClickSound.play();}" title="Kembali ke atas">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<div id="toast-container"></div>
+
+<script src="components/shared.js"></script>
+<script>
+// ─── INIT ─────────────────────────────────────────────────
+(function(){
+  // Ambil elemen audio
+  const bgMusic = document.getElementById('bg-music');
+  const audioBtn = document.getElementById('audio-toggle-btn');
+  const audioIcon = document.getElementById('audio-icon');
+
+  if(bgMusic) { bgMusic.volume = 0.40; } // Setel volume awal 40%
+
+  // Fungsi Logika Play/Pause Audio & Pergantian Ikon
+  if(audioBtn && bgMusic && audioIcon) {
+    audioBtn.addEventListener('click', () => {
+      if(window.ClickSound) { ClickSound.play(); }
+
+      if (bgMusic.paused) {
+        bgMusic.play()
+          .then(() => {
+            audioIcon.className = "fas fa-volume-up text-base";
+            if(window.Toast) Toast.show('Musik Aktif', 'Musik latar kembali diputar', 'success');
+          })
+          .catch(err => console.log("Audio play error:", err));
+      } else {
+        bgMusic.pause();
+        audioIcon.className = "fas fa-volume-mute text-base";
+        if(window.Toast) Toast.show('Musik Berhenti', 'Musik latar telah dihentikan', 'info');
+      }
+    });
+  }
+
+  // Loading screen & Auto-play audio terintegrasi
+  setTimeout(()=>{
+    const ls = document.getElementById('loading-screen');
+    if(ls){ 
+      ls.classList.add('out'); 
+      setTimeout(()=>ls.remove(), 700); 
+    }
+
+    // Trik pemicu musik otomatis menyala setelah loading screen hilang
+    if(bgMusic) {
+      bgMusic.play()
+        .then(() => {
+          if(audioIcon) audioIcon.className = "fas fa-volume-up text-base";
+        })
+        .catch(error => {
+          console.log("Autoplay ditahan browser. Menunggu interaksi klik user.");
+          if(audioIcon) audioIcon.className = "fas fa-volume-mute text-base";
+        });
+    }
+  }, 2600);
+
+  // Trik Cadangan: Jika browser memblokir, musik menyala otomatis saat ada klik pertama dari user di halaman
+  document.addEventListener('click', () => {
+    if (bgMusic && bgMusic.paused) {
+      bgMusic.play()
+        .then(() => {
+          if(audioIcon) audioIcon.className = "fas fa-volume-up text-base";
+        })
+        .catch(err => console.log("Audio play error:", err));
+    }
+  }, { once: true });
+
+  // Theme
+  function applyTheme(t){
+    document.documentElement.setAttribute('data-theme',t);
+    localStorage.setItem('acTheme',t);
+    document.querySelectorAll('.btn-theme').forEach(b=>b.textContent=t==='dark'?'☀️':'🌙');
+  }
+  applyTheme(localStorage.getItem('acTheme')||'light');
+  document.querySelectorAll('#themeBtn,#themeBtn2').forEach(b=>{
+    b.addEventListener('click',()=>{
+      if(window.ClickSound) ClickSound.play();
+      const c=document.documentElement.getAttribute('data-theme');
+      const n=c==='dark'?'light':'dark';
+      applyTheme(n);
+      if(window.Toast) Toast.show('Tema Diubah', n==='dark'?'Mode Gelap 🌙 aktif':'Mode Terang ☀️ aktif','info');
+    });
+  });
+
+  // Navbar scroll
+  const nav=document.getElementById('navbar');
+  window.addEventListener('scroll',()=>{
+    if(nav) nav.classList.toggle('scrolled',window.scrollY>50);
+    const bttEl = document.getElementById('btt');
+    if(bttEl) bttEl.classList.toggle('show',window.scrollY>300);
+  });
+
+  // Hamburger
+  const ham=document.getElementById('ham');
+  const mobNav=document.getElementById('mob-nav');
+  const mobOv=document.getElementById('mob-overlay');
+  function openMobileNav(){ 
+    if(ham) ham.classList.add('open'); 
+    if(mobNav) mobNav.classList.add('open'); 
+    if(mobOv) mobOv.classList.add('open'); 
+  }
+  window.closeMobileNav=function(){ 
+    if(ham) ham.classList.remove('open'); 
+    if(mobNav) mobNav.classList.remove('open'); 
+    if(mobOv) mobOv.classList.remove('open'); 
+  }
+  if(ham) {
+    ham.addEventListener('click',()=>{ ham.classList.contains('open')?closeMobileNav():openMobileNav(); });
+  }
+  if(mobNav) {
+    mobNav.querySelectorAll('.mobile-nav-link').forEach(l=>l.addEventListener('click',closeMobileNav));
+  }
+
+  // Scroll Reveal
+  const ro=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target); }
+    });
+  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal,.reveal-l,.reveal-r,.reveal-s').forEach(el=>ro.observe(el));
+
+  // Counter animation
+  const co=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ animCounter(e.target); co.unobserve(e.target); }
+    });
+  },{threshold:.5});
+  document.querySelectorAll('[data-counter]').forEach(el=>co.observe(el));
+  function animCounter(el){
+    const target=+el.dataset.counter, suffix=el.dataset.suffix||'', dur=2200, start=performance.now();
+    const tick=ts=>{
+      const p=Math.min((ts-start)/dur,1), ease=1-Math.pow(1-p,3);
+      el.textContent=Math.floor(ease*target).toLocaleString('id-ID')+suffix;
+      if(p<1) requestAnimationFrame(tick);
+      else el.textContent=target.toLocaleString('id-ID')+suffix;
+    };
+    requestAnimationFrame(tick);
+  }
+
+  // FAQ
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    item.querySelector('.faq-q').addEventListener('click',()=>{
+      if(window.ClickSound) ClickSound.play();
+      const open=item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+      if(!open) item.classList.add('open');
+    });
+  });
+
+  // Wishlist
+  const wl=JSON.parse(localStorage.getItem('acWishlist')||'[]');
+  function initWishlist(){
+    document.querySelectorAll('.wishlist-btn').forEach(btn=>{
+      const id=btn.dataset.id;
+      if(wl.includes(id)){ btn.classList.add('active'); btn.textContent='❤️'; }
+      btn.addEventListener('click',e=>{
+        e.stopPropagation(); if(window.ClickSound) ClickSound.play();
+        const idx=wl.indexOf(id);
+        if(idx>-1){ wl.splice(idx,1); btn.classList.remove('active'); btn.textContent='🤍'; if(window.Toast) Toast.show('Wishlist','Dihapus dari wishlist','info'); }
+        else{ wl.push(id); btn.classList.add('active'); btn.textContent='❤️'; btn.style.transform='scale(1.3)'; setTimeout(()=>btn.style.transform='',300); if(window.Toast) Toast.show('Wishlist','Ditambahkan ke wishlist ❤️','success'); }
+        localStorage.setItem('acWishlist',JSON.stringify(wl));
+      });
+    });
+  }
+
+  // Featured Products (show first 8)
+  const fgrid=document.getElementById('featured-grid');
+  if(fgrid && window.PRODUCTS){
+    PRODUCTS.slice(0,8).forEach((p,i)=>{
+      const badgeMap={TERLARIS:'badge-hot',NEW:'badge-new',SALE:'badge-sale',PREMIUM:'badge-pop',POPULER:'badge-pop'};
+      fgrid.innerHTML += `
+      <div class="product-card reveal" data-delay="${(i%4)+1}" data-name="${p.name.toLowerCase()}" data-cat="${p.category}">
+        <div class="product-img" style="overflow:hidden; display:flex; align-items:center; justify-content:center; background:var(--bg-secondary);">
+          <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+          ${p.badge?`<span class="product-badge ${badgeMap[p.badge]||'badge-pop'}">${p.badge}</span>`:''}
+          <button class="wishlist-btn" data-id="p${p.id}">🤍</button>
+          <div class="product-img-overlay">
+            <button class="btn btn-white btn-sm" onclick="if(window.ClickSound){ClickSound.play();}openQuickView(${p.id})"> Quick View</button>
+            <a href="app/order/index.html" class="btn btn-primary btn-sm" onclick="if(window.ClickSound){ClickSound.play();}"> Pesan</a>
+          </div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">${p.category}</div>
+          <h3 class="product-name">${p.name}</h3>
+          <p class="product-desc-short">${p.desc.substring(0,70)}...</p>
+          <div class="product-footer">
+            <div>
+              <span class="product-price">${typeof formatRupiah === 'function' ? formatRupiah(p.price) : p.price}</span>
+              ${p.oldPrice?`<span class="product-old-price">${typeof formatRupiah === 'function' ? formatRupiah(p.oldPrice) : p.oldPrice}</span>`:''}
+            </div>
+            <div class="product-btns">
+              <button class="btn btn-ghost btn-sm" onclick="if(window.ClickSound){ClickSound.play();}openQuickView(${p.id})"><i class="fas fa-eye"></i></button>
+              <a href="app/order/index.html" class="btn btn-primary btn-sm" onclick="if(window.ClickSound){ClickSound.play();}"><i class="fas fa-shopping-cart"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    });
+    initWishlist();
+    document.querySelectorAll('.product-card.reveal').forEach(el=>ro.observe(el));
+  }
+
+  // Quick View Modal
+  const modalBd=document.createElement('div');
+  modalBd.className='modal-backdrop';
+  modalBd.id='qv-modal';
+  modalBd.innerHTML=`<div class="modal-box" id="qv-box"></div>`;
+  document.body.appendChild(modalBd);
+  modalBd.addEventListener('click',e=>{ if(e.target===modalBd) closeQV(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeQV(); });
+  function closeQV(){ modalBd.classList.remove('open'); }
+  window.openQuickView=function(id){
+    if(window.ClickSound) ClickSound.play();
+    const p=PRODUCTS.find(x=>x.id===id);
+    if(!p) return;
+    const badgeMap={TERLARIS:'badge-hot',NEW:'badge-new',SALE:'badge-sale',PREMIUM:'badge-pop',POPULER:'badge-pop'};
+    document.getElementById('qv-box').innerHTML=`
+      <div class="modal-header">
+        <h2 class="modal-title">${p.name}</h2>
+        <button class="modal-close-btn" onclick="closeQV()">✕</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
+        <div style="aspect-ratio:1; background:var(--bg-secondary); border-radius:var(--radius-lg); overflow:hidden; border:1px solid var(--border);">
+          <img src="${p.image}" alt="${p.name}" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div>
+          ${p.badge?`<span class="product-badge ${badgeMap[p.badge]||'badge-pop'}" style="position:static;display:inline-block;margin-bottom:12px;">${p.badge}</span>`:''}
+          <div class="product-cat" style="margin-bottom:8px;">${p.category}</div>
+          <p style="color:var(--text-secondary);font-size:.93rem;line-height:1.75;margin-bottom:16px;">${p.desc}</p>
+          <div style="margin-bottom:20px;">
+            <span class="product-price" style="font-size:1.8rem;">${typeof formatRupiah === 'function' ? formatRupiah(p.price) : p.price}</span>
+            ${p.oldPrice?`<span class="product-old-price" style="font-size:.95rem;">${typeof formatRupiah === 'function' ? formatRupiah(p.oldPrice) : p.oldPrice}</span>`:''}
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a href="app/order/index.html" class="btn btn-primary" onclick="if(window.ClickSound){ClickSound.play();}"><i class="fas fa-shopping-bag"></i> Pesan Sekarang</a>
+            <button class="btn btn-ghost" onclick="closeQV()"><i class="fas fa-times"></i> Tutup</button>
+          </div>
+        </div>
+      </div>
+    `;
+    modalBd.classList.add('open');
+  };
+
+  // Testimonials Slider
+  const track=document.getElementById('testi-track');
+  const dotsC=document.getElementById('testi-dots');
+  if(track && window.TESTIMONIALS){
+    TESTIMONIALS.forEach(t=>{
+      track.innerHTML+=`
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <div class="testi-stars">${'★'.repeat(t.rating)}${'☆'.repeat(5-t.rating)}</div>
+        <p class="testi-text">${t.text}</p>
+        <div class="testi-author">
+          <div class="testi-avatar">${t.avatar}</div>
+          <div><div class="testi-name">${t.name}</div><div class="testi-role">${t.role} · ${t.city}</div></div>
+        </div>
+      </div>`;
+    });
+    let idx=0, cardW=0, vis=3, auto;
+    function calcLayout(){
+      const cw=track.parentElement.offsetWidth;
+      vis=window.innerWidth<768?1:window.innerWidth<1024?2:3;
+      cardW=(cw-(vis-1)*22)/vis;
+      track.querySelectorAll('.testi-card').forEach(c=>c.style.minWidth=cardW+'px');
+    }
+    function goTo(i){
+      const max=Math.max(0,TESTIMONIALS.length-vis);
+      idx=Math.max(0,Math.min(i,max));
+      track.style.transform=`translateX(-${idx*(cardW+22)}px)`;
+      if(dotsC) {
+        dotsC.querySelectorAll('.sdot').forEach((d,j)=>d.classList.toggle('active',j===idx));
+      }
+    }
+    function makeDots(){
+      if(!dotsC) return;
+      dotsC.innerHTML='';
+      const max=Math.max(0,TESTIMONIALS.length-vis);
+      for(let i=0;i<=max;i++){
+        const d=document.createElement('button');
+        d.className='sdot'+(i===0?' active':'');
+        d.onclick=()=>{ if(window.ClickSound) ClickSound.play(); goTo(i); resetAuto(); };
+        dotsC.appendChild(d);
+      }
+    }
+    function resetAuto(){ clearInterval(auto); auto=setInterval(()=>goTo(idx<TESTIMONIALS.length-vis?idx+1:0),4500); }
+    calcLayout(); makeDots(); resetAuto();
+    const tpBtn = document.getElementById('tprev');
+    const tnBtn = document.getElementById('tnext');
+    if(tpBtn) tpBtn.onclick=()=>{ if(window.ClickSound) ClickSound.play(); goTo(idx-1); resetAuto(); };
+    if(tnBtn) tnBtn.onclick=()=>{ if(window.ClickSound) ClickSound.play(); goTo(idx+1); resetAuto(); };
+    let sx=0;
+    track.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;},{passive:true});
+    track.addEventListener('touchend',e=>{const d=sx-e.changedTouches[0].clientX;if(Math.abs(d)>50){d>0?goTo(idx+1):goTo(idx-1);resetAuto();}});
+    window.addEventListener('resize',()=>{ calcLayout(); makeDots(); goTo(0); });
+  }
+})();
+</script>
+</body>
+</html>
