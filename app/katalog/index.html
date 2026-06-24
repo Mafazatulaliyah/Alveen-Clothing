@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produk | Alveen Clothing</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../../css/globals.css">
+  <script>(function(){const t=localStorage.getItem('acTheme')||'light';document.documentElement.setAttribute('data-theme',t);})()</script>
+
+  <style>
+    .audio-control-btn-fixed {
+      position: fixed;
+      bottom: 160px; /* Di atas tombol back to top agar tidak bertumpukan */
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 9999;
+      transition: all 0.3s ease;
+    }
+    .audio-control-btn-fixed:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+
+<audio id="bgMusic" src="../audio/click.mp3" loop></audio>
+
+<button id="audio-toggle-btn" class="audio-control-btn-fixed fixed bottom-40 right-5 w-11 h-11 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center shadow-lg z-[9999] transition-all duration-300 hover:scale-110 border border-white/20" title="Hentikan/Putar Musik">
+  <i id="audio-icon" class="fas fa-volume-up text-base"></i>
+</button>
+
+<div id="loading-screen">
+  <div class="ls-logo">KATALOG</div>
+  <div class="ls-bar-wrap"><div class="ls-bar"></div></div>
+</div>
+
+<nav id="navbar">
+  <div class="nav-wrap">
+    <a href="../../index.html" class="nav-logo">
+      <div class="nav-logo-box">AC</div>
+      <span class="nav-logo-text">ALVEEN CLOTHING</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="../../index.html" class="nav-link">Home</a>
+      <a href="../product/index.html" class="nav-link">Produk</a>
+      <a href="index.html" class="nav-link active">Katalog</a> 
+      <a href="../order/index.html" class="nav-link">Order</a>
+      <a href="../kontak/index.html" class="nav-link">Kontak</a>
+    </div>
+
+    <div class="nav-actions">
+      <button class="btn-theme" id="themeBtn">🌙</button>
+      <a href="../order/index.html" class="btn-nav-cta" onclick="ClickSound.play()">
+        <i class="fas fa-shopping-bag"></i> Pesan Sekarang
+      </a>
+    </div>
+    <button class="hamburger" id="ham"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-nav-overlay" id="mob-overlay" onclick="closeMobileNav()"></div>
+<div class="mobile-nav" id="mob-nav">
+  <a href="../../index.html" class="mobile-nav-link">Home</a>
+  <a href="../product/index.html" class="mobile-nav-link">Produk</a>
+  <a href="index.html" class="mobile-nav-link active">Katalog</a>
+  <a href="../order/index.html" class="mobile-nav-link">Order</a>
+  <a href="../kontak/index.html" class="mobile-nav-link">Kontak</a>
+</div>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="hero-badge" style="display:inline-flex; margin-bottom:16px; animation:fadeDown .8s .2s both;">
+      <span class="hero-badge-dot"></span> Katalog Kreatif
+    </div>
+    <h1 class="page-hero-title">Katalog <span>Desain</span></h1>
+    <p class="page-hero-sub">Kumpulan inspirasi desain konveksi terbaik dari Alveen Clothing</p>
+  </div>
+</div>
+
+<section class="katalog-section">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+      <div class="katalog-card overflow-hidden rounded-xl shadow-sm bg-white reveal cursor-pointer" data-delay="1" onclick="bukaDetail(1)">
+        <div class="katalog-img-wrap h-52 overflow-hidden bg-slate-100 relative group">
+          <img src="../../img/produk/jersey-futsal.jpg" alt="Jersey Futsal Pro Custom" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <span class="btn btn-white btn-sm shadow-md">Lihat Detail</span>
+          </div>
+        </div>
+        <div class="p-4 border-t border-slate-100 text-center">
+          <span class="font-bold text-slate-800 tracking-wide text-lg block">Jersey Futsal Pro Custom</span>
+        </div>
+      </div>
+
+      <div class="katalog-card overflow-hidden rounded-xl shadow-sm bg-white reveal cursor-pointer" data-delay="2" onclick="bukaDetail(2)">
+        <div class="katalog-img-wrap h-52 overflow-hidden bg-slate-100 relative group">
+          <img src="../../img/produk/jersey-soccer.jpg" alt="Jersey Sepak Bola Elite" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <span class="btn btn-white btn-sm shadow-md">Lihat Detail</span>
+          </div>
+        </div>
+        <div class="p-4 border-t border-slate-100 text-center">
+          <span class="font-bold text-slate-800 tracking-wide text-lg block">Jersey Sepak Bola Elite</span>
+        </div>
+      </div>
+
+      <div class="katalog-card overflow-hidden rounded-xl shadow-sm bg-white reveal cursor-pointer" data-delay="3" onclick="bukaDetail(3)">
+        <div class="katalog-img-wrap h-52 overflow-hidden bg-slate-100 relative group">
+          <img src="../../img/produk/jaket-windbreaker.jpg" alt="Jaket Gunung Windbreaker" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <span class="btn btn-white btn-sm shadow-md">Lihat Detail</span>
+          </div>
+        </div>
+        <div class="p-4 border-t border-slate-100 text-center">
+          <span class="font-bold text-slate-800 tracking-wide text-lg block">Jaket Gunung Windbreaker</span>
+        </div>
+      </div>
+
+      <div class="katalog-card overflow-hidden rounded-xl shadow-sm bg-white reveal cursor-pointer" data-delay="4" onclick="bukaDetail(4)">
+        <div class="katalog-img-wrap h-52 overflow-hidden bg-slate-100 relative group">
+          <img src="../../img/produk/jaket-hiking.jpg" alt="Jaket Outdoor Hiking Pro" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <span class="btn btn-white btn-sm shadow-md">Lihat Detail</span>
+          </div>
+        </div>
+        <div class="p-4 border-t border-slate-100 text-center">
+          <span class="font-bold text-slate-800 tracking-wide text-lg block">Jaket Outdoor Hiking Pro</span>
+        </div>
+      </div>
+
+      <div class="katalog-card overflow-hidden rounded-xl shadow-sm bg-white reveal cursor-pointer" data-delay="1" onclick="bukaDetail(5)">
+        <div class="katalog-img-wrap h-52 overflow-hidden bg-slate-100 relative group">
+          <img src="../../img/produk/hoodie-fleece.jpg" alt="Hoodie Fleece Premium" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <span class="btn btn-white btn-sm shadow-md">Lihat Detail</span>
+          </div>
+        </div>
+        <div class="p-4 border-t border-slate-100 text-center">
+          <span class="font-bold text-slate-800 tracking-wide text-lg block">Hoodie Fleece Premium</span>
+        </div>
+      </div>
+
+      <div class="katalog-card overflow-hidden rounded-xl shadow-sm bg-white reveal cursor-pointer" data-delay="2" onclick="bukaDetail(6)">
+        <div class="katalog-img-wrap h-52 overflow-hidden bg-slate-100 relative group">
+          <img src="../../img/produk/hoodie-oversize.jpg" alt="Hoodie Oversize Streetwear" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <span class="btn btn-white btn-sm shadow-md">Lihat Detail</span>
+          </div>
+        </div>
+        <div class="p-4 border-t border-slate-100 text-center">
+          <span class="font-bold text-slate-800 tracking-wide text-lg block">Hoodie Oversize Streetwear</span>
+        </div>
+      </div>
+
+      <div class="katalog-card overflow-hidden rounded-xl shadow-sm bg-white reveal cursor-pointer" data-delay="3" onclick="bukaDetail(7)">
+        <div class="katalog-img-wrap h-52 overflow-hidden bg-slate-100 relative group">
+          <img src="../../img/produk/polo-shirt.jpg" alt="Polo Shirt Komunitas" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <span class="btn btn-white btn-sm shadow-md">Lihat Detail</span>
+          </div>
+        </div>
+        <div class="p-4 border-t border-slate-100 text-center">
+          <span class="font-bold text-slate-800 tracking-wide text-lg block">Polo Shirt Komunitas</span>
+        </div>
+      </div>
+
+      <div class="katalog-card overflow-hidden rounded-xl shadow-sm bg-white reveal cursor-pointer" data-delay="4" onclick="bukaDetail(8)">
+        <div class="katalog-img-wrap h-52 overflow-hidden bg-slate-100 relative group">
+          <img src="../../img/produk/seragam-organisasi.jpg" alt="Seragam Organisasi Custom" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <span class="btn btn-white btn-sm shadow-md">Lihat Detail</span>
+          </div>
+        </div>
+        <div class="p-4 border-t border-slate-100 text-center">
+          <span class="font-bold text-slate-800 tracking-wide text-lg block">Seragam Organisasi Custom</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div id="modalDetail" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden justify-center items-center z-[9999] p-4 transition-all duration-300" onclick="closeDetailOutside(event)">
+  <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl relative flex flex-col md:flex-row transform scale-95 opacity-0 transition-all duration-300" id="modalBody">
+    
+    <button onclick="tutupDetail()" class="absolute top-3 right-4 z-10 text-slate-400 hover:text-slate-600 dark:hover:text-white text-3xl font-light transition-colors">&times;</button>
+    
+    <div class="w-full md:w-1/2 h-64 md:h-96 bg-slate-100 relative overflow-hidden group">
+      <span id="modalBadge" class="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider hidden z-10"></span>
+      
+      <img id="modalImg" src="" alt="" class="w-full h-full object-cover cursor-zoom-in group-hover:scale-102 transition-transform duration-300" onclick="bukaZoomLayarPenuh()">
+      
+      <div class="absolute bottom-3 right-3 bg-black/60 text-white text-[10px] px-2 py-1 rounded pointer-events-none">
+        <i class="fas fa-search-plus"></i> Klik Foto untuk Zoom
+      </div>
+    </div>
+    
+    <div class="w-full md:w-1/2 p-6 flex flex-col justify-between">
+      <div>
+        <span id="modalCategory" class="text-xs font-bold tracking-widest text-blue-600 dark:text-blue-400 uppercase block mb-1"></span>
+        <h2 id="modalTitle" class="text-xl md:text-2xl font-black text-slate-800 dark:text-white leading-tight mb-3"></h2>
+        
+        <div class="flex items-baseline gap-2 mb-4">
+          <span id="modalPrice" class="text-xl font-extrabold text-emerald-600 dark:text-emerald-400"></span>
+          <span id="modalOldPrice" class="text-sm text-slate-400 line-through hidden"></span>
+        </div>
+        
+        <hr class="border-slate-100 dark:border-slate-800 mb-4">
+        
+        <p id="modalDesc" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6"></p>
+      </div>
+      
+      <a href="../order/index.html" class="w-full inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-colors shadow-lg shadow-blue-600/20" onclick="ClickSound.play()">
+        <i class="fas fa-shopping-bag"></i> Pesan Sekarang
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<div id="lightboxZoom" class="fixed inset-0 bg-black hidden z-[99999] justify-center items-center cursor-zoom-out opacity-0 transition-opacity duration-300" onclick="tutupZoomLayarPenuh()">
+  <button class="absolute top-4 right-6 text-white text-4xl font-thin hover:text-slate-300 transition-colors">&times;</button>
+  <img id="lightboxImg" src="" alt="Zoomed View" class="max-w-[95vw] max-h-[92vh] object-contain rounded-sm shadow-2xl transform scale-95 transition-transform duration-300">
+</div>
+
+<a href="https://wa.me/089681216684" id="wa-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-chevron-up"></i></button>
+
+<script src="../../shared.js"></script>
+<script>
+(function(){
+  // AMBIL ELEMEN KONTROL AUDIO
+  const bgMusic = document.getElementById('bgMusic');
+  const audioBtn = document.getElementById('audio-toggle-btn');
+  const audioIcon = document.getElementById('audio-icon');
+
+  if(bgMusic) { 
+    bgMusic.volume = 0.40; 
+    
+    // Ambil riwayat detik terakhir dari halaman sebelumnya agar musik seamless
+    const lastTime = localStorage.getItem('bgMusic_time');
+    if(lastTime) {
+      bgMusic.currentTime = parseFloat(lastTime);
+    }
+
+    // Simpan posisi detik secara realtime setiap audio berputar
+    bgMusic.addEventListener('timeupdate', () => {
+      localStorage.setItem('bgMusic_time', bgMusic.currentTime);
+    });
+  }
+
+  // LOGIKA PLAY/PAUSE TOMBOL AUDIO MELAYANG
+  if(audioBtn && bgMusic && audioIcon) {
+    audioBtn.addEventListener('click', () => {
+      if(window.ClickSound) { window.ClickSound.play(); }
+
+      if (bgMusic.paused) {
+        bgMusic.play()
+          .then(() => {
+            audioIcon.className = "fas fa-volume-up text-base";
+            if(window.Toast) Toast.show('Musik Aktif', 'Musik latar kembali diputar', 'success');
+          })
+          .catch(err => console.log("Audio play error:", err));
+      } else {
+        bgMusic.pause();
+        audioIcon.className = "fas fa-volume-mute text-base";
+        if(window.Toast) Toast.show('Musik Berhenti', 'Musik latar telah dihentikan', 'info');
+      }
+    });
+  }
+
+  // 1. Loading Screen & Pemicu Autoplay Backsound
+  setTimeout(() => { 
+    const ls = document.getElementById('loading-screen'); 
+    if(ls){
+      ls.classList.add('out');
+      setTimeout(() => ls.remove(), 700);
+    } 
+
+    // Memicu musik menyala otomatis setelah loading screen selesai
+    if(bgMusic) {
+      bgMusic.play()
+        .then(() => {
+          if(audioIcon) audioIcon.className = "fas fa-volume-up text-base";
+        })
+        .catch(error => {
+          console.log("Autoplay diblokir browser. Menggunakan cadangan click handler.");
+          if(audioIcon) audioIcon.className = "fas fa-volume-mute text-base";
+        });
+    }
+  }, 1200);
+
+  // Cadangan: Jika browser memblokir autoplay, musik berputar otomatis begitu user mengeklik area mana pun pertama kali
+  document.addEventListener('click', () => {
+    if (bgMusic && bgMusic.paused) {
+      bgMusic.play()
+        .then(() => {
+          if(audioIcon) audioIcon.className = "fas fa-volume-up text-base";
+        })
+        .catch(err => console.log("Audio play error via document click:", err));
+    }
+  }, { once: true });
+
+  // OTOMATISASI EFEK SUARA KLIK UNTUK SEMUA ELEMEN INTERAKTIF SECARA AMAN
+  document.addEventListener('click', (e) => {
+    if (window.ClickSound && e.target.closest('button, .btn, .nav-link, .footer-link, .katalog-card')) {
+      window.ClickSound.currentTime = 0;
+      window.ClickSound.play().catch(err => console.log(err));
+    }
+  });
+
+  // 2. Theme Switcher Sync
+  function applyTheme(t){ 
+    document.documentElement.setAttribute('data-theme', t); 
+    localStorage.setItem('acTheme', t); 
+    document.querySelectorAll('.btn-theme').forEach(b => b.textContent = t === 'dark' ? '☀️' : '🌙'); 
+  }
+  applyTheme(localStorage.getItem('acTheme') || 'light');
+  
+  document.querySelectorAll('#themeBtn').forEach(b => b.addEventListener('click', () => { 
+    const c = document.documentElement.getAttribute('data-theme'); 
+    applyTheme(c === 'dark' ? 'light' : 'dark'); 
+    if(window.Toast) Toast.show('Tema', 'Berhasil diganti!', 'info'); 
+  }));
+
+  // 3. Navbar & Back to Top Scroll Behavior
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => { 
+    if(nav) nav.classList.toggle('scrolled', window.scrollY > 50); 
+    const btt = document.getElementById('btt');
+    if(btt) btt.classList.toggle('show', window.scrollY > 300); 
+  });
+
+  // 4. Mobile Navigation Toggle
+  const ham = document.getElementById('ham');
+  const mobNav = document.getElementById('mob-nav');
+  const mobOv = document.getElementById('mob-overlay');
+  
+  window.closeMobileNav = function(){ 
+    if(ham) ham.classList.remove('open'); 
+    if(mobNav) mobNav.classList.remove('open'); 
+    if(mobOv) mobOv.classList.remove('open'); 
+  }
+  
+  if(ham) {
+    ham.addEventListener('click', () => ham.classList.contains('open') ? closeMobileNav() : (ham.classList.add('open'), mobNav.classList.add('open'), mobOv.classList.add('open')));
+  }
+  if(mobNav) {
+    mobNav.querySelectorAll('.mobile-nav-link').forEach(l => l.addEventListener('click', closeMobileNav));
+  }
+
+  // 5. Scroll Reveal Observer Animation
+  const ro = new IntersectionObserver(entries => entries.forEach(e => { 
+    if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target); } 
+  }), {threshold: .12});
+  
+  document.querySelectorAll('.reveal, .reveal-l, .reveal-r, .reveal-s').forEach(el => ro.observe(el));
+
+  // DATA PRODUK DARI USER
+  const produkData = [
+    { id:1,  name:"Jersey Futsal Pro Custom",   category:"jersey",     price:85000,  oldPrice:120000, badge:"TERLARIS", image:"../../img/produk/jersey-futsal.jpg", desc:"Drifit premium, sublimasi full color, jahitan kuat dan rapi untuk performa terbaik di lapangan." },
+    { id:2,  name:"Jersey Sepak Bola Elite",    category:"jersey",     price:90000,  oldPrice:null,   badge:"NEW",      image:"../../img/produk/jersey-soccer.jpg", desc:"Bahan polyester breathable, print tajam, ringan dan nyaman untuk pertandingan." },
+    { id:3,  name:"Jaket Gunung Windbreaker",   category:"jaket",      price:185000, oldPrice:null,   badge:"PREMIUM",  image:"../../img/produk/jaket-windbreaker.jpg", desc:"Parasut ripstop tahan angin & air, cocok untuk pendakian dan aktivitas outdoor ekstrem." },
+    { id:4,  name:"Jaket Outdoor Hiking Pro",   category:"jaket",      price:195000, oldPrice:220000, badge:"SALE",     image:"../../img/produk/jaket-hiking.jpg", desc:"Material taslan waterproof, multi-pocket, desain ergonomis untuk kenyamanan maksimal." },
+    { id:5,  name:"Hoodie Fleece Premium",      category:"hoodie",     price:145000, oldPrice:175000, badge:"TERLARIS", image:"../../img/produk/hoodie-fleece.jpg", desc:"Fleece tebal lembut, custom sablon/bordir, ukuran S-5XL tersedia." },
+    { id:6,  name:"Hoodie Oversize Streetwear", category:"hoodie",     price:155000, oldPrice:null,   badge:"NEW",      image:"../../img/produk/hoodie-oversize.jpg", desc:"Desain oversize kekinian, bahan cotton fleece premium, cocok untuk gaya sehari-hari." },
+    { id:7,  name:"Polo Shirt Komunitas",       category:"seragam",    price:95000,  oldPrice:null,   badge:null,       image:"../../img/produk/polo-shirt.jpg", desc:"Lacoste pique berkualitas, bordir nama & logo, ideal untuk acara resmi komunitas." },
+    { id:8,  name:"Seragam Organisasi Custom",  category:"seragam",    price:110000, oldPrice:null,   badge:"POPULER",  image:"../../img/produk/seragam-organisasi.jpg", desc:"Seragam profesional dengan detail bordir, bahan nyaman dan tahan lama untuk organisasi." },
+    { id:9,  name:"Kaos Olahraga Drifit",       category:"baju",       price:65000,  oldPrice:85000,  badge:"SALE",     image:"../../img/produk/kaos-drifit.jpg", desc:"Drifit anti-keringat, ringan, elastis, cocok untuk berbagai aktivitas olahraga." },
+    { id:10, name:"Baju Seragam Event",          category:"seragam",    price:75000,  oldPrice:null,   badge:null,       image:"../../img/produk/seragam-event.jpg", desc:"Custom event apparel, sablon full color, produksi cepat untuk kebutuhan acara mendadak." },
+    { id:11, name:"Tas Outdoor Daypack 30L",    category:"tas",        price:245000, oldPrice:285000, badge:"PREMIUM",  image:"../../img/produk/tas-daypack.jpg", desc:"Bahan cordura 600D tahan air, sistem back support, multi-compartment untuk pendaki." },
+    { id:12, name:"Sepatu Hiking Trail",        category:"sepatu",     price:385000, oldPrice:450000, badge:"TERLARIS", image:"../../img/produk/sepatu-hiking.jpg", desc:"Outsole Vibram grip kuat, midsole EVA, toe cap reinforced, waterproof membrane." },
+    { id:13, name:"Kaos Kaki Hiking Anti-Slip", category:"kaossaki",   price:45000,  oldPrice:null,   badge:null,       image:"../../img/produk/kaos-kaki.jpg", desc:"Wool blend antibakteri, padding extra di tumit dan ujung, anti-slip untuk medan berat." },
+    { id:14, name:"Jersey Basket Premium",      category:"jersey",     price:95000,  oldPrice:115000, badge:"NEW",      image:"../../img/produk/jersey-basket.jpg", desc:"Bahan mesh breathable ultra-ringan, sublimasi full panel, ukuran S-XXL tersedia." },
+    { id:15, name:"Jaket Varsity Custom",       category:"jaket",      price:215000, oldPrice:null,   badge:"PREMIUM",  image:"../../img/produk/jaket-varsity.jpg", desc:"Bahan wool premium kombinasi leather sleeves, embroidered patches, tampilan klasik modern." },
+    { id:16, name:"Tas Ransel Laptop Outdoor",  category:"tas",        price:295000, oldPrice:330000, badge:"SALE",     image:"../../img/produk/tas-laptop.jpg", desc:"Laptop compartment 15\", raincover included, ergonomic shoulder strap, material tahan banting." }
+  ];
+
+  // Fungsi Format Rupiah
+  function formatRupiah(angka) {
+    return 'Rp ' + angka.toLocaleString('id-ID');
+  }
+
+  // 6. Modal Detail Interactivity
+  window.bukaDetail = function(id) {
+    const produk = produkData.find(p => p.id === id);
+    if (!produk) return;
+
+    // Isikan data ke elemen modal
+    document.getElementById('modalImg').src = produk.image;
+    document.getElementById('modalImg').alt = produk.name;
+    document.getElementById('modalTitle').innerText = produk.name;
+    document.getElementById('modalCategory').innerText = produk.category;
+    document.getElementById('modalDesc').innerText = produk.desc;
+    document.getElementById('modalPrice').innerText = formatRupiah(produk.price);
+
+    // Handler Badge
+    const mBadge = document.getElementById('modalBadge');
+    if(produk.badge) {
+      mBadge.innerText = produk.badge;
+      mBadge.classList.remove('hidden');
+    } else {
+      mBadge.classList.add('hidden');
+    }
+
+    // Handler Harga Coret (Old Price)
+    const mOldPrice = document.getElementById('modalOldPrice');
+    if(produk.oldPrice) {
+      mOldPrice.innerText = formatRupiah(produk.oldPrice);
+      mOldPrice.classList.remove('hidden');
+    } else {
+      mOldPrice.classList.add('hidden');
+    }
+
+    // Tampilkan Modal dengan Animasi Smooth
+    const modal = document.getElementById('modalDetail');
+    const body = document.getElementById('modalBody');
+    
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    
+    setTimeout(() => {
+      body.classList.remove('scale-95', 'opacity-0');
+      body.classList.add('scale-100', 'opacity-100');
+    }, 20);
+    
+    document.body.style.overflow = 'hidden';
+  }
+
+  window.tutupDetail = function() {
+    const modal = document.getElementById('modalDetail');
+    const body = document.getElementById('modalBody');
+    
+    body.classList.remove('scale-100', 'opacity-100');
+    body.classList.add('scale-95', 'opacity-0');
+    
+    setTimeout(() => {
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }, 300);
+  }
+
+  window.closeDetailOutside = function(e) {
+    if(e.target === document.getElementById('modalDetail')) {
+      tutupDetail();
+    }
+  }
+
+  // 7. Lightbox Zoom Fullscreen Feature
+  window.bukaZoomLayarPenuh = function() {
+    const srcGambar = document.getElementById('modalImg').src;
+    const lightbox = document.getElementById('lightboxZoom');
+    const lightboxImg = document.getElementById('lightboxImg');
+
+    lightboxImg.src = srcGambar;
+    lightbox.classList.remove('hidden');
+    lightbox.classList.add('flex');
+
+    setTimeout(() => {
+      lightbox.classList.remove('opacity-0');
+      lightbox.classList.add('opacity-100');
+      lightboxImg.classList.remove('scale-95');
+      lightboxImg.classList.add('scale-100');
+    }, 20);
+  }
+
+  window.tutupZoomLayarPenuh = function() {
+    const lightbox = document.getElementById('lightboxZoom');
+    const lightboxImg = document.getElementById('lightboxImg');
+
+    lightbox.classList.remove('opacity-100');
+    lightbox.classList.add('opacity-0');
+    lightboxImg.classList.remove('scale-100');
+    lightboxImg.classList.add('scale-95');
+
+    setTimeout(() => {
+      lightbox.classList.remove('flex');
+      lightbox.classList.add('hidden');
+    }, 300);
+  }
+})();
+</script>
+</body>
+</html>
