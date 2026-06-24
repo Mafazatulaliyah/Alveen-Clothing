@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontak | Alveen Clothing</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../../css/globals.css">
+  <script>(function(){const t=localStorage.getItem('acTheme')||'light';document.documentElement.setAttribute('data-theme',t);})()</script>
+
+  <style>
+    .audio-control-btn-fixed {
+      position: fixed;
+      bottom: 160px; /* Di atas tombol back to top agar tidak bertumpukan */
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 9999;
+      transition: all 0.3s ease;
+    }
+    .audio-control-btn-fixed:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+
+<audio id="bgMusic" src="../audio/click.mp3" loop></audio>
+
+<button id="audio-toggle-btn" class="audio-control-btn-fixed fixed bottom-40 right-5 w-11 h-11 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center shadow-lg z-[9999] transition-all duration-300 hover:scale-110 border border-white/20" title="Hentikan/Putar Musik">
+  <i id="audio-icon" class="fas fa-volume-up text-base"></i>
+</button>
+
+<div id="loading-screen"><div class="ls-logo">KONTAK</div><div class="ls-bar-wrap"><div class="ls-bar"></div></div></div>
+
+<nav id="navbar">
+  <div class="nav-wrap">
+    <a href="../../index.html" class="nav-logo">
+      <div class="nav-logo-box">AC</div>
+      <span class="nav-logo-text">ALVEEN CLOTHING</span>
+    </a>
+    <div class="nav-links">
+      <a href="../../index.html" class="nav-link">Home</a>
+      <a href="../product/index.html" class="nav-link">Produk</a>
+      <a href="../katalog/index.html" class="nav-link">Katalog</a>
+      <a href="../order/index.html" class="nav-link">Order</a>
+      <a href="index.html" class="nav-link active">Kontak</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-theme" id="themeBtn">🌙</button>
+      <a href="../order/index.html" class="btn-nav-cta" onclick="if(window.ClickSound) ClickSound.play()"><i class="fas fa-shopping-bag"></i> Pesan Sekarang</a>
+    </div>
+    <button class="hamburger" id="ham"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-nav-overlay" id="mob-overlay" onclick="closeMobileNav()"></div>
+<div class="mobile-nav" id="mob-nav">
+  <a href="../../index.html" class="mobile-nav-link">Home</a>
+  <a href="../product/index.html" class="mobile-nav-link">Produk</a>
+  <a href="../katalog/index.html" class="mobile-nav-link">Katalog</a>
+  <a href="../order/index.html" class="mobile-nav-link">Order</a>
+  <a href="index.html" class="mobile-nav-link active">Kontak</a>
+</div>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="hero-badge" style="display:inline-flex;margin-bottom:16px;animation:fadeDown .8s .2s both;">
+      <span class="hero-badge-dot"></span> Hubungi Kami
+    </div>
+    <h1 class="page-hero-title">Hubungi <span>Kami</span></h1>
+    <p class="page-hero-sub">Punya pertanyaan atau ingin mulai berdiskusi? Tim kami siap melayani kebutuhan konveksi Anda</p>
+  </div>
+</div>
+
+<section class="kontak-section section">
+  <div class="container">
+    <div class="kontak-grid">
+
+      <div class="kontak-cards">
+        <div class="kontak-card reveal-l">
+          <h3><i class="fas fa-map-marker-alt" style="color:var(--color-primary); margin-right:8px;"></i> Alamat</h3>
+          <p>
+            Jl. Pesona Asri, Blk A1 No.5,<br>
+            Kramas, Tembalang,<br>
+            Semarang
+          </p>
+        </div>
+
+        <div class="kontak-card reveal-l" data-delay="2">
+          <h3><i class="fab fa-whatsapp" style="color:#25D366; margin-right:8px;"></i> WhatsApp</h3>
+          <p>0896-8121-6684</p>
+        </div>
+
+        <div class="kontak-card reveal-l" data-delay="3">
+          <h3><i class="fab fa-instagram" style="color:#E1306C; margin-right:8px;"></i> Instagram</h3>
+          <p>@alveenclothing_konveksi</p>
+        </div>
+      </div>
+
+      <div class="kontak-card reveal-r">
+        <h3 style="margin-bottom:15px"><i class="fas fa-envelope" style="color:var(--color-primary); margin-right:8px;"></i> Kirim Pesan</h3>
+        <form onsubmit="event.preventDefault(); if(window.Toast) Toast.show('Pesan', 'Berhasil dikirim!', 'success');">
+          <div class="form-group">
+            <input type="text" class="form-input" placeholder="Nama" required>
+          </div>
+          <br>
+          <div class="form-group">
+            <input type="email" class="form-input" placeholder="Email" required>
+          </div>
+          <br>
+          <div class="form-group">
+            <textarea class="form-input" rows="6" placeholder="Pesan" required></textarea>
+          </div>
+          <br>
+          <button type="submit" class="btn btn-primary w-full" onclick="if(window.ClickSound) ClickSound.play()">Kirim Pesanan</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <div class="footer-logo-box">AC</div>
+          <span class="footer-logo-text">ALVEEN CLOTHING</span>
+        </div>
+        <p class="footer-tagline">Solusi terbaik untuk kebutuhan konveksi premium Anda.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/alveenclothing_konveksi?igsh=MWtraWZoaW1mYTU4MA==" class="footer-soc"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="footer-soc"><i class="fab fa-facebook"></i></a>
+          <a href="https://wa.me/6289681216684" class="footer-soc"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4>Menu</h4>
+        <div class="footer-links">
+          <a href="../../index.html" class="footer-link">Beranda</a>
+          <a href="../product/index.html" class="footer-link">Produk</a>
+          <a href="../order/index.html" class="footer-link">Order</a>
+          <a href="index.html" class="footer-link">Kontak</a>
+        </div>
+      </div>
+      <div>
+        <h4>Kategori</h4>
+        <div class="footer-links">
+          <a href="../product/index.html" class="footer-link">Jersey</a>
+          <a href="../product/index.html" class="footer-link">Jaket Outdoor</a>
+          <a href="../product/index.html" class="footer-link">Seragam</a>
+          <a href="../product/index.html" class="footer-link">Hoodie</a>
+        </div>
+      </div>
+      <div>
+        <h4>Kontak</h4>
+        <div class="footer-contact-row"><span class="fci">📱</span><span>0896-8121-6684</span></div>
+        <div class="footer-contact-row"><span class="fci">✉️</span><span>alveen.clothing@email.com</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 <span>Alveen Clothing</span>. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/6289681216684" id="wa-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-chevron-up"></i></button>
+
+<script src="../../components/shared.js"></script>
+<script src="../../shared.js"></script>
+<script>
+(function(){
+  // AMBIL ELEMEN KONTROL AUDIO
+  const bgMusic = document.getElementById('bgMusic');
+  const audioBtn = document.getElementById('audio-toggle-btn');
+  const audioIcon = document.getElementById('audio-icon');
+
+  if(bgMusic) { 
+    bgMusic.volume = 0.40; 
+    
+    // Mengambil waktu detik terakhir dari localStorage agar lagu berlanjut
+    const lastTime = localStorage.getItem('bgMusic_time');
+    if(lastTime) {
+      bgMusic.currentTime = parseFloat(lastTime);
+    }
+
+    // Menyimpan posisi detik audio secara berkala
+    bgMusic.addEventListener('timeupdate', () => {
+      localStorage.setItem('bgMusic_time', bgMusic.currentTime);
+    });
+  }
+
+  // LOGIKA PLAY/PAUSE TOMBOL AUDIO
+  if(audioBtn && bgMusic && audioIcon) {
+    audioBtn.addEventListener('click', () => {
+      if(window.ClickSound) { ClickSound.play(); }
+
+      if (bgMusic.paused) {
+        bgMusic.play()
+          .then(() => {
+            audioIcon.className = "fas fa-volume-up text-base";
+            if(window.Toast) Toast.show('Musik Aktif', 'Musik latar kembali diputar', 'success');
+          })
+          .catch(err => console.log("Audio play error:", err));
+      } else {
+        bgMusic.pause();
+        audioIcon.className = "fas fa-volume-mute text-base";
+        if(window.Toast) Toast.show('Musik Berhenti', 'Musik latar telah dihentikan', 'info');
+      }
+    });
+  }
+
+  // MODIFIKASI AUTOPLAY BACKSOUND VIA LOADING SCREEN
+  setTimeout(()=>{ 
+    const ls = document.getElementById('loading-screen'); 
+    if(ls){
+      ls.classList.add('out');
+      setTimeout(()=>ls.remove(), 700);
+    } 
+
+    // Memicu musik menyala otomatis setelah loading screen selesai
+    if(bgMusic) {
+      bgMusic.play()
+        .then(() => {
+          if(audioIcon) audioIcon.className = "fas fa-volume-up text-base";
+        })
+        .catch(error => {
+          console.log("Autoplay diblokir browser, musik akan menyala otomatis saat ada interaksi.");
+          if(audioIcon) audioIcon.className = "fas fa-volume-mute text-base";
+        });
+    }
+  }, 1200);
+
+  // Cadangan: Jika browser memblokir, musik langsung berputar begitu user mengeklik area mana pun
+  document.addEventListener('click', () => {
+    if (bgMusic && bgMusic.paused) {
+      bgMusic.play()
+        .then(() => {
+          if(audioIcon) audioIcon.className = "fas fa-volume-up text-base";
+        })
+        .catch(err => console.log("Audio play error:", err));
+    }
+  }, { once: true });
+
+  // OTOMATISASI EFEK SUARA KLIK UNTUK SEMUA TOMBOL SECARA AMAN
+  document.addEventListener('click', (e) => {
+    if (window.ClickSound && e.target.closest('button, .btn, .nav-link, .footer-link, .filter-chip')) {
+      window.ClickSound.currentTime = 0;
+      window.ClickSound.play().catch(err => console.log(err));
+    }
+  });
+
+  // Theme Management Logic
+  function applyTheme(t){ 
+    document.documentElement.setAttribute('data-theme', t); 
+    localStorage.setItem('acTheme', t); 
+    document.querySelectorAll('.btn-theme').forEach(b => b.textContent = t === 'dark' ? '☀️' : '🌙'); 
+  }
+  applyTheme(localStorage.getItem('acTheme') || 'light');
+  
+  document.querySelectorAll('#themeBtn').forEach(b => b.addEventListener('click', ()=>{ 
+    if(typeof ClickSound !== 'undefined') ClickSound.play(); 
+    const c = document.documentElement.getAttribute('data-theme'); 
+    applyTheme(c === 'dark' ? 'light' : 'dark'); 
+    if(typeof Toast !== 'undefined') Toast.show('Tema', 'Berhasil diganti!', 'info'); 
+  }));
+
+  // Navbar and Back-to-Top Scroll Behaviour
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', ()=>{ 
+    if(nav) nav.classList.toggle('scrolled', window.scrollY > 50); 
+    const btt = document.getElementById('btt');
+    if(btt) btt.classList.toggle('show', window.scrollY > 300); 
+  });
+
+  // Mobile Navigation Hamburger Logic
+  const ham = document.getElementById('ham');
+  const mobNav = document.getElementById('mob-nav');
+  const mobOv = document.getElementById('mob-overlay');
+  
+  window.closeMobileNav = function(){ 
+    if(ham) ham.classList.remove('open'); 
+    if(mobNav) mobNav.classList.remove('open'); 
+    if(mobOv) mobOv.classList.remove('open'); 
+  }
+  
+  if(ham){
+    ham.addEventListener('click', () => ham.classList.contains('open') ? closeMobileNav() : (ham.classList.add('open'), mobNav.classList.add('open'), mobOv.classList.add('open')));
+  }
+  if(mobNav){
+    mobNav.querySelectorAll('.mobile-nav-link').forEach(l => l.addEventListener('click', closeMobileNav));
+  }
+
+  // Intersection Observer for Scroll Animation
+  const ro = new IntersectionObserver(entries => entries.forEach(e => { 
+    if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target); } 
+  }), {threshold: .12});
+  document.querySelectorAll('.reveal, .reveal-l, .reveal-r, .reveal-s').forEach(el => ro.observe(el));
+})();
+</script>
+</body>
+</html>
